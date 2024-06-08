@@ -4,16 +4,24 @@ import {
   TradeCard,
   TradeInfo,
 } from '@/interfaces/trade-response.interface';
+import { UserLoggedResponse } from '@/interfaces/user-response.interface';
 import { getAllTrades } from '@/services/trade.service';
-import { AccountCircle } from '@mui/icons-material';
-import { AppBar, Grid, IconButton, Paper, Toolbar } from '@mui/material';
+import { getLoggedUserData } from '@/services/user.service';
+import { AccountCircle, Logout } from '@mui/icons-material';
+import {
+  AppBar,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Paper,
+  Toolbar,
+} from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
-import { getLoggedUserData } from '@/services/user.service';
-import { UserLoggedResponse } from '@/interfaces/user-response.interface';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
@@ -22,6 +30,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<UserLoggedResponse | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const orange500 = fullConfig.theme?.colors?.orange['500'];
 
   useEffect(() => {
@@ -56,8 +65,16 @@ export default function Home() {
     }
   };
 
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <div>
+    <main>
       <AppBar position="static">
         <Toolbar className="justify-between bg-neutral-50">
           <Link href="/">
@@ -69,7 +86,44 @@ export default function Home() {
             />
           </Link>
           {user ? (
-            <p className="text-orange-500">{`Olá ${user.name}!`}</p>
+            <div className="flex items-center gap-4">
+              <p className="navbar-text text-secondary">{`Olá ${user.name}!`}</p>
+              <button
+                aria-controls="navbar-menu"
+                aria-haspopup="true"
+                onClick={handleMenuClick}
+                style={{ color: orange500 }}
+              >
+                <p className="navbar-text text-secondary">Opções</p>
+              </button>
+              <Menu
+                id="navbar-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Link href="/my-trades">
+                    <p className="text-secondary">Minhas Trocas</p>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/create-trade">
+                    <p className="text-secondary">Criar Troca</p>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/add-card">
+                    <p className="text-secondary">Adicionar Card</p>
+                  </Link>
+                </MenuItem>
+              </Menu>
+              <IconButton className="gap-2" style={{ color: orange500 }}>
+                <p className="navbar-text text-primary text-base">Sair</p>
+                <Logout />
+              </IconButton>
+            </div>
           ) : (
             <Link href="/login">
               <IconButton style={{ color: orange500 }}>
@@ -106,6 +160,6 @@ export default function Home() {
           ))}
         </Grid>
       )}
-    </div>
+    </main>
   );
 }

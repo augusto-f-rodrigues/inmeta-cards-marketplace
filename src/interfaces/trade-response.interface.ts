@@ -1,14 +1,14 @@
 import { Card } from './card.interface';
 import { User } from './user.interface';
 
-export interface TradeResponse {
-  list: List[];
+export interface GetAllTradeResponse {
+  list: TradeInfo[];
   rpp: number;
   page: number;
   more: boolean;
 }
 
-export interface List {
+export interface TradeInfo {
   id: string;
   userId: string;
   createdAt: string;

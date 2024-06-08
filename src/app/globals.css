@@ -6,17 +6,20 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  @apply bg-neutral-100 text-neutral-700
+  @apply bg-neutral-100 text-neutral-700;
 }
 
 @layer utilities {
-  .main-container {
-    @apply flex flex-col justify-center items-center w-full h-full
+  .form-container {
+    @apply flex h-full w-full flex-col items-center justify-center;
   }
-  .text-h1{
-    @apply text-2xl font-extrabold text-center lg:text-4xl
+  .text-primary {
+    @apply text-orange-600
   }
-  .text-h2{
-    @apply text-center font-semibold lg:text-2xl
+  .text-secondary {
+    @apply text-teal-600;
   }
-} 
+  .navbar-text {
+    @apply text-xs font-semibold md:text-base;
+  }
+}

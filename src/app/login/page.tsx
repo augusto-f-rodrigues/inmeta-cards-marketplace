@@ -58,7 +58,7 @@ export default function Login() {
   };
 
   return (
-    <main className="main-container p-10">
+    <main className="form-container p-10">
       <h1 className="text-h1 mb-4">Login</h1>
       <form
         className="flex w-full min-w-80 max-w-[500px] flex-col items-center justify-center rounded-lg border border-gray-500 border-opacity-20 bg-white p-10"
