@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
+import { getLoggedUserData } from '@/services/user.service';
+import { UserLoggedResponse } from '@/interfaces/user-response.interface';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
@@ -19,10 +21,12 @@ export default function Home() {
   const [trades, setTrades] = useState<TradeInfo[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<UserLoggedResponse | null>(null);
   const orange500 = fullConfig.theme?.colors?.orange['500'];
 
   useEffect(() => {
     fetchData();
+    checkUser();
   }, [page]);
 
   const fetchData = async () => {
@@ -40,6 +44,18 @@ export default function Home() {
     }
   };
 
+  const checkUser = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const res = await getLoggedUserData();
+        setUser(res);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    }
+  };
+
   return (
     <div>
       <AppBar position="static">
@@ -52,11 +68,15 @@ export default function Home() {
               height={50}
             />
           </Link>
-          <Link href="/login">
-            <IconButton style={{ color: orange500 }}>
-              <AccountCircle />
-            </IconButton>
-          </Link>
+          {user ? (
+            <p className="text-orange-500">{`Olá ${user.name}!`}</p>
+          ) : (
+            <Link href="/login">
+              <IconButton style={{ color: orange500 }}>
+                <AccountCircle />
+              </IconButton>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
 
