@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 body {
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
   @apply bg-neutral-100 text-neutral-700
 }
 
 @layer utilities {
   .main-container {
-    @apply flex flex-col justify-center items-center w-full h-full p-10
+    @apply flex flex-col justify-center items-center w-full h-full
   }
   .text-h1{
     @apply text-2xl font-extrabold text-center lg:text-4xl

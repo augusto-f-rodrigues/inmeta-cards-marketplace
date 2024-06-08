@@ -14,7 +14,7 @@ import { createUser } from '@/services/user.service';
 
 export default function Register() {
   const [name, setName] = useState<string | null>(null);
-  const [email, setUsername] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [errors, setErrors] = useState({
     name: false,
@@ -98,7 +98,7 @@ export default function Register() {
             error={errors.email}
             variant="outlined"
             value={email || ''}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           {errors.email && (
