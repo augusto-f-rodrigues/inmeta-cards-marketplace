@@ -114,6 +114,15 @@ export default function Login() {
             <span>Entrar</span>
           </Button>
         </div>
+
+        <Link className="mt-4 w-full" href="/">
+          <Button
+            className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
+            variant="contained"
+          >
+            <span>Voltar para Homepage</span>
+          </Button>
+        </Link>
       </form>
       <Snackbar
         open={openAlert}

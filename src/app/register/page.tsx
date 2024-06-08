@@ -125,12 +125,12 @@ export default function Register() {
         </FormControl>
 
         <div className="flex w-full flex-col items-center gap-4 md:flex-row">
-          <Link className="w-full md:max-w-52" href="/">
+          <Link className="w-full md:max-w-52" href="/login">
             <Button
               className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
               variant="contained"
             >
-              <span>Voltar</span>
+              <span>Fazer Login</span>
             </Button>
           </Link>
 
@@ -142,6 +142,15 @@ export default function Register() {
             <span>Registrar</span>
           </Button>
         </div>
+
+        <Link className="mt-4 w-full" href="/">
+          <Button
+            className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
+            variant="contained"
+          >
+            <span>Voltar para Homepage</span>
+          </Button>
+        </Link>
       </form>
       <Snackbar
         open={openAlert}
