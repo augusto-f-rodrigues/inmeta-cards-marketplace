@@ -1,4 +1,7 @@
-import { GetAllCardsResponse } from '@/interfaces/card-response.interface';
+import {
+  AddCardsRequest,
+  GetAllCardsResponse,
+} from '@/interfaces/card-response.interface';
 import api from './axios-setup.service';
 
 const getAllCards = async (): Promise<GetAllCardsResponse> => {
@@ -11,4 +14,14 @@ const getAllCards = async (): Promise<GetAllCardsResponse> => {
   }
 };
 
-export { getAllCards };
+const addLoggedUserCards = async (cardIds: AddCardsRequest): Promise<void> => {
+  try {
+    const response = await api.post(`/me/cards`, { cardIds: cardIds });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user by id:', error);
+    throw error;
+  }
+};
+
+export { getAllCards, addLoggedUserCards };
