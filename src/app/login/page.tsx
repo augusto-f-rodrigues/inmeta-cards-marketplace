@@ -99,7 +99,7 @@ export default function Login() {
         <div className="flex w-full flex-col items-center gap-4 md:flex-row">
           <Link className="w-full md:max-w-52" href="/register">
             <Button
-              className="w-full bg-blue-600 px-8 py-1 normal-case hover:bg-blue-500"
+              className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
               variant="contained"
             >
               <span>Cadastre-se</span>
@@ -107,7 +107,7 @@ export default function Login() {
           </Link>
 
           <Button
-            className="mb-4 w-full bg-green-600 px-8 py-1 normal-case hover:bg-green-500 md:mb-0 md:max-w-52"
+            className="mb-4 w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500 md:mb-0 md:max-w-52"
             variant="contained"
             type="submit"
           >
