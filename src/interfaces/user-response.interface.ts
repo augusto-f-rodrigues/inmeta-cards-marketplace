@@ -6,7 +6,3 @@ export interface UserLoggedResponse {
   email: string;
   cards: Card[];
 }
-
-export interface UserLoggedCardsRequest {
-  cardIds: string[];
-}
