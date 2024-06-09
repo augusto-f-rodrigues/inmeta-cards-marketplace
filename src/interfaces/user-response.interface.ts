@@ -1,8 +1,8 @@
-import { Card } from './card.interface';
+import { CardI } from './card.interface';
 
-export interface UserLoggedResponse {
+export interface UserLoggedResponseI {
   id: string;
   name: string;
   email: string;
-  cards: Card[];
+  cards: CardI[];
 }

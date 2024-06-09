@@ -1,25 +1,25 @@
-import { Card } from './card.interface';
-import { User } from './user.interface';
+import { CardI } from './card.interface';
+import { UserI } from './user.interface';
 
-export interface GetAllTradeResponse {
-  list: TradeInfo[];
+export interface GetAllTradeResponseI {
+  list: TradeInfoI[];
   rpp: number;
   page: number;
   more: boolean;
 }
 
-export interface TradeInfo {
+export interface TradeInfoI {
   id: string;
   userId: string;
   createdAt: string;
-  user: User;
-  tradeCards: TradeCard[];
+  user: UserI;
+  tradeCards: TradeCardI[];
 }
 
-export interface TradeCard {
+export interface TradeCardI {
   id: string;
   cardId: string;
   tradeId: string;
   type: string;
-  card: Card;
+  card: CardI;
 }

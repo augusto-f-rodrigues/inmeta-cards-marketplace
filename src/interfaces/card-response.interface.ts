@@ -1,14 +1,14 @@
-import { Card } from './card.interface';
+import { CardI } from './card.interface';
 
-export interface GetAllCardsResponse {
-  list: Card[];
+export interface GetAllCardsResponseI {
+  list: CardI[];
   rpp: number;
   page: number;
   more: boolean;
 }
 
-export interface AddCardsRequest {
+export interface AddCardsRequestI {
   cardIds: string[];
 }
 
-export type UserLoggedCardsResponse = Card[];
+export type UserLoggedCardsResponseT = CardI[];

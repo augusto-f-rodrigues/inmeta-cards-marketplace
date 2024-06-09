@@ -1,10 +1,10 @@
-import { User } from '@/interfaces/user.interface';
+import { CardI } from '@/interfaces/card.interface';
+import { RegisterResponseI } from '@/interfaces/register-response.interface';
+import { UserLoggedResponseI } from '@/interfaces/user-response.interface';
+import { UserI } from '@/interfaces/user.interface';
 import api from './axios-setup.service';
-import { RegisterResponse } from '@/interfaces/register-response.interface';
-import { UserLoggedResponse } from '@/interfaces/user-response.interface';
-import { Card } from '@/interfaces/card.interface';
 
-const createUser = async (userData: User): Promise<RegisterResponse> => {
+const createUser = async (userData: UserI): Promise<RegisterResponseI> => {
   try {
     const response = await api.post('/register', userData);
     return response.data;
@@ -14,7 +14,7 @@ const createUser = async (userData: User): Promise<RegisterResponse> => {
   }
 };
 
-const getLoggedUserData = async (): Promise<UserLoggedResponse> => {
+const getLoggedUserData = async (): Promise<UserLoggedResponseI> => {
   try {
     const response = await api.get(`/me`);
     return response.data;
@@ -24,7 +24,7 @@ const getLoggedUserData = async (): Promise<UserLoggedResponse> => {
   }
 };
 
-const getLoggedUserCardsData = async (): Promise<Card[]> => {
+const getLoggedUserCardsData = async (): Promise<CardI[]> => {
   try {
     const response = await api.get(`/me/cards`);
     return response.data;
@@ -34,4 +34,4 @@ const getLoggedUserCardsData = async (): Promise<Card[]> => {
   }
 };
 
-export { createUser, getLoggedUserData, getLoggedUserCardsData };
+export { createUser, getLoggedUserCardsData, getLoggedUserData };

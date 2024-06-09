@@ -1,10 +1,10 @@
 'use client';
 import {
-  GetAllTradeResponse,
-  TradeCard,
-  TradeInfo,
+  GetAllTradeResponseI,
+  TradeCardI,
+  TradeInfoI,
 } from '@/interfaces/trade-response.interface';
-import { UserLoggedResponse } from '@/interfaces/user-response.interface';
+import { UserLoggedResponseI } from '@/interfaces/user-response.interface';
 import { getAllTrades } from '@/services/trade.service';
 import { getLoggedUserData } from '@/services/user.service';
 import { AccountCircle, Logout } from '@mui/icons-material';
@@ -26,10 +26,10 @@ import tailwindConfig from '../../tailwind.config';
 const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Home() {
-  const [trades, setTrades] = useState<TradeInfo[]>([]);
+  const [trades, setTrades] = useState<TradeInfoI[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<UserLoggedResponse | null>(null);
+  const [user, setUser] = useState<UserLoggedResponseI | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const orange500 = fullConfig.theme?.colors?.orange['500'];
 
@@ -41,7 +41,7 @@ export default function Home() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response: GetAllTradeResponse = await getAllTrades({
+      const response: GetAllTradeResponseI = await getAllTrades({
         rpp: 10,
         page,
       });
@@ -94,7 +94,7 @@ export default function Home() {
                 onClick={handleMenuClick}
                 style={{ color: orange500 }}
               >
-                <p className="navbar-text text-secondary">Opções</p>
+                <p className="navbar-text text-secondary">Menu</p>
               </button>
               <Menu
                 id="navbar-menu"
@@ -145,7 +145,7 @@ export default function Home() {
                 <p>{trade.createdAt}</p>
                 <p>{trade.tradeCards.length} cards</p>
                 <Grid container spacing={1}>
-                  {trade.tradeCards.map((el: TradeCard) => (
+                  {trade.tradeCards.map((el: TradeCardI) => (
                     <Grid item xs={4} key={el.card.id}>
                       <img
                         src={el.card.imageUrl}

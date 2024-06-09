@@ -1,13 +1,11 @@
-import { GetAllTradeResponse } from '@/interfaces/trade-response.interface';
+import { PaginationQueryRequestI } from '@/interfaces/pagination-query-request.interface';
+import { GetAllTradeResponseI } from '@/interfaces/trade-response.interface';
 import api from './axios-setup.service';
 
 const getAllTrades = async ({
-  rpp,
+  rpp = 20,
   page,
-}: {
-  rpp: number;
-  page: number;
-}): Promise<GetAllTradeResponse> => {
+}: PaginationQueryRequestI): Promise<GetAllTradeResponseI> => {
   try {
     const response = await api.get(`/trades?rpp=${rpp}&page=${page}`);
     return response.data;

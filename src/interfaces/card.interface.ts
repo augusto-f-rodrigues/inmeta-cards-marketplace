@@ -1,4 +1,4 @@
-export interface Card {
+export interface CardI {
   id: string;
   name: string;
   description: string;
