@@ -4,6 +4,7 @@ import {
 } from '@/interfaces/card-response.interface';
 import { PaginationQueryRequestI } from '@/interfaces/pagination-query-request.interface';
 import api from './axios-setup.service';
+import { CardI } from '@/interfaces/card.interface';
 
 const getAllCards = async ({
   rpp = 20,
@@ -11,7 +12,10 @@ const getAllCards = async ({
 }: PaginationQueryRequestI): Promise<GetAllCardsResponseI> => {
   try {
     const response = await api.get(`/cards?rpp=${rpp}&page=${page}`);
-    return response.data;
+    const filteredData = response.data.list.filter(
+      (card: CardI) => card.imageUrl && card.name,
+    );
+    return { ...response.data, list: filteredData };
   } catch (error) {
     console.error('Error fetching get all cards:', error);
     throw error;
