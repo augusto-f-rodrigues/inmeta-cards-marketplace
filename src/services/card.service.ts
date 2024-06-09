@@ -22,7 +22,7 @@ const getAllCards = async ({
   }
 };
 
-const addLoggedUserCards = async (cardIds: AddCardsRequestI): Promise<void> => {
+const addCardsToUser = async (cardIds: string[]): Promise<void> => {
   try {
     const response = await api.post(`/me/cards`, { cardIds: cardIds });
     return response.data;
@@ -32,5 +32,5 @@ const addLoggedUserCards = async (cardIds: AddCardsRequestI): Promise<void> => {
   }
 };
 
-export { addLoggedUserCards, getAllCards };
+export { addCardsToUser, getAllCards };
 

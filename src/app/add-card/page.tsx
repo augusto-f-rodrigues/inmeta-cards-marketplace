@@ -1,13 +1,12 @@
 'use client';
 import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
-import { CardI } from '@/interfaces/card.interface';
-import { getAllCards } from '@/services/card.service';
-import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import Pagination from '@/components/Pagination';
 import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
+import { CardI } from '@/interfaces/card.interface';
+import { addCardsToUser, getAllCards } from '@/services/card.service';
+import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 export default function AddCard() {
   const [cards, setCards] = useState<CardI[]>([]);
@@ -20,8 +19,9 @@ export default function AddCard() {
   });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
-
-  const router = useRouter();
+  const [alertSeverity, setAlertSeverity] = useState<
+    'success' | 'error' | 'warning' | 'info'
+  >('info');
 
   const fetchCards = async (page: number) => {
     setLoading(true);
@@ -49,8 +49,17 @@ export default function AddCard() {
     }));
   };
 
-  const handleAddCard = () => {
-    router.push('/add-card');
+  const handleAddCard = async (cardId: string) => {
+    try {
+      await addCardsToUser([cardId]);
+      setAlertMessage('Card adicionado com sucesso!');
+      setAlertSeverity('success');
+      setOpenAlert(true);
+    } catch (error) {
+      setAlertMessage('Erro ao adicionar o card');
+      setAlertSeverity('error');
+      setOpenAlert(true);
+    }
   };
 
   return (
@@ -64,7 +73,7 @@ export default function AddCard() {
         ) : (
           <>
             <Grid container spacing={3}>
-              {cards.map((card) => (
+              {cards.map((card: CardI) => (
                 <Grid item xs={12} sm={6} md={4} key={card.id}>
                   <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
                     <img src={card.imageUrl} alt={card.name} />
@@ -73,6 +82,7 @@ export default function AddCard() {
                       <Button
                         className="w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
                         variant="contained"
+                        onClick={() => handleAddCard(card.id)}
                       >
                         <span>Adicionar</span>
                       </Button>
@@ -89,7 +99,7 @@ export default function AddCard() {
           autoHideDuration={3000}
           onClose={() => setOpenAlert(false)}
         >
-          <CustomAlert severity="error" message={alertMessage} />
+          <CustomAlert severity={alertSeverity} message={alertMessage} />
         </Snackbar>
       </section>
     </main>
