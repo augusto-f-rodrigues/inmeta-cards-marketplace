@@ -1,6 +1,5 @@
 'use client';
 import { orange500 } from '@/constants/tailwind-theme-colors.constants';
-import useUser from '@/hooks/useUser';
 import { Logout } from '@mui/icons-material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
@@ -10,7 +9,7 @@ import React, { useState } from 'react';
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const user = useUser();
+  const username = localStorage.getItem('name');
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -31,9 +30,9 @@ export default function Navbar() {
             height={50}
           />
         </Link>
-        {user ? (
+        {username ? (
           <div className="flex items-center gap-4">
-            <p className="navbar-text text-secondary">{`Olá ${user.name}!`}</p>
+            <p className="navbar-text text-secondary">{`Olá ${username}!`}</p>
             <button
               aria-controls="navbar-menu"
               aria-haspopup="true"

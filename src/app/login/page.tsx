@@ -39,8 +39,7 @@ export default function Login() {
 
     if (!newErrors.email && !newErrors.password) {
       try {
-        const { token } = await login(email!, password!);
-        localStorage.setItem('token', token);
+        await login(email!, password!);        
         router.push('/');
       } catch (error: any) {
         console.error('Error logging in:', error);

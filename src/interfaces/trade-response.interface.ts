@@ -23,3 +23,16 @@ export interface TradeCardI {
   type: string;
   card: CardI;
 }
+
+export interface CreateTradeRequestI {
+  cards: CreateTradeCardRequestI[];
+}
+
+export interface CreateTradeCardRequestI {
+  cardId: string;
+  type: 'OFFERING' | 'RECEIVING';
+}
+
+export interface CreateTradeResponseI {
+  tradeId: string;
+}

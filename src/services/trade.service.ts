@@ -1,5 +1,9 @@
 import { PaginationQueryRequestI } from '@/interfaces/pagination-query-request.interface';
-import { GetAllTradeResponseI } from '@/interfaces/trade-response.interface';
+import {
+  CreateTradeRequestI,
+  CreateTradeResponseI,
+  GetAllTradeResponseI,
+} from '@/interfaces/trade-response.interface';
 import api from './axios-setup.service';
 
 const getAllTrades = async ({
@@ -15,4 +19,16 @@ const getAllTrades = async ({
   }
 };
 
-export { getAllTrades };
+const createTrade = async (
+  cards: CreateTradeRequestI,
+): Promise<CreateTradeResponseI> => {
+  try {
+    const response = await api.post(`/trades`, cards);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching create trades:', error);
+    throw error;
+  }
+};
+
+export { getAllTrades, createTrade };

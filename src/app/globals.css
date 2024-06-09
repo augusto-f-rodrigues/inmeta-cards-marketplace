@@ -13,8 +13,11 @@ body {
   .form-container {
     @apply flex h-full w-full flex-col items-center justify-center;
   }
+  .text-h1 {
+    @apply text-center text-2xl font-extrabold lg:text-4xl;
+  }
   .text-primary {
-    @apply text-orange-600
+    @apply text-orange-600;
   }
   .text-secondary {
     @apply text-teal-600;
