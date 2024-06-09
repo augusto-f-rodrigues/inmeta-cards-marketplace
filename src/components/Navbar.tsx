@@ -1,5 +1,5 @@
 'use client';
-import useUser from '@/hooks/use-user';
+import useUser from '@/hooks/useUser';
 import { Logout } from '@mui/icons-material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';

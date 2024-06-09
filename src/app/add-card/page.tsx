@@ -3,21 +3,21 @@ import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
 import { CardI } from '@/interfaces/card.interface';
 import { getAllCards } from '@/services/card.service';
-import {
-  Button,
-  Card,
-  CircularProgress,
-  Grid,
-  Pagination,
-  Snackbar,
-} from '@mui/material';
+import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Pagination from '@/components/Pagination';
+import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
 
 export default function AddCard() {
   const [cards, setCards] = useState<CardI[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
+  const [pageInfo, setPageInfo] = useState<GetAllCardsResponseI>({
+    list: [],
+    rpp: 0,
+    page: 1,
+    more: false,
+  });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
 
@@ -26,8 +26,9 @@ export default function AddCard() {
   const fetchCards = async (page: number) => {
     setLoading(true);
     try {
-      const response = await getAllCards({ page: page });
+      const response = await getAllCards({ page });
       setCards(response.list);
+      setPageInfo(response);
     } catch (error) {
       console.error('Error fetching cards:', error);
       setAlertMessage('Erro ao carregar os cards');
@@ -38,14 +39,14 @@ export default function AddCard() {
   };
 
   useEffect(() => {
-    fetchCards(page);
-  }, [page]);
+    fetchCards(pageInfo.page);
+  }, [pageInfo.page]);
 
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    setPage(value);
+  const handlePageChange = (newPage: number) => {
+    setPageInfo((prevState: GetAllCardsResponseI) => ({
+      ...prevState,
+      page: newPage,
+    }));
   };
 
   const handleAddCard = () => {
@@ -78,13 +79,7 @@ export default function AddCard() {
                 </Grid>
               ))}
             </Grid>
-            <Pagination
-              page={page}
-              onChange={handlePageChange}
-              color="primary"
-              size="large"
-              className="mt-4"
-            />
+            <Pagination pageInfo={pageInfo} onPageChange={handlePageChange} />
           </>
         )}
         <Snackbar
@@ -94,9 +89,6 @@ export default function AddCard() {
         >
           <CustomAlert severity="error" message={alertMessage} />
         </Snackbar>
-        <Button variant="contained" color="primary" onClick={handleAddCard}>
-          Adicionar Card
-        </Button>
       </section>
     </main>
   );
