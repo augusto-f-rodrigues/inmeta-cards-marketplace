@@ -25,6 +25,16 @@ const getAllCards = async ({
 const addCardsToUser = async (cardIds: string[]): Promise<void> => {
   try {
     const response = await api.post(`/me/cards`, { cardIds: cardIds });
+    return;
+  } catch (error) {
+    console.error('Error fetching user by id:', error);
+    throw error;
+  }
+};
+
+const getCardsFromLoggedUser = async (): Promise<CardI[]> => {
+  try {
+    const response = await api.get(`/me/cards`);
     return response.data;
   } catch (error) {
     console.error('Error fetching user by id:', error);
@@ -32,5 +42,20 @@ const addCardsToUser = async (cardIds: string[]): Promise<void> => {
   }
 };
 
-export { addCardsToUser, getAllCards };
+const deleteCardFromLoggedUser = async (id: string): Promise<void> => {
+  try {
+    await api.delete(`/me/cards/${id}`);
+    return;
+  } catch (error) {
+    console.error('Error fetching user by id:', error);
+    throw error;
+  }
+};
+
+export {
+  addCardsToUser,
+  getAllCards,
+  getCardsFromLoggedUser,
+  deleteCardFromLoggedUser,
+};
 

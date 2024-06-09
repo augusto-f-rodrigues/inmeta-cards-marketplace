@@ -60,6 +60,11 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
+                <Link href="/my-cards">
+                  <p className="text-secondary">Meus Cards</p>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
                 <Link href="/add-card">
                   <p className="text-secondary">Adicionar Card</p>
                 </Link>

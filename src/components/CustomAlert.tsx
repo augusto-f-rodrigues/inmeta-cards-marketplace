@@ -9,7 +9,11 @@ interface CustomAlertProps {
 const CustomAlert = React.forwardRef<HTMLDivElement, CustomAlertProps>(
   (props, ref) => {
     return (
-      <Alert ref={ref} severity={props.severity}>
+      <Alert
+        className="flex h-14 w-96 items-center rounded-lg border text-base font-semibold shadow-lg"
+        ref={ref}
+        severity={props.severity}
+      >
         {props.message}
       </Alert>
     );

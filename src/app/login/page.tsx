@@ -125,8 +125,9 @@ export default function Login() {
         </Link>
       </form>
       <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={openAlert}
-        autoHideDuration={3000}
+        autoHideDuration={1500}
         onClose={() => setOpenAlert(false)}
       >
         <CustomAlert severity={alertSeverity} message={alertMessage!} />

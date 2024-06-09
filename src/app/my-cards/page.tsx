@@ -1,37 +1,32 @@
 'use client';
 import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
-import Pagination from '@/components/Pagination';
-import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
-import { addCardsToUser, getAllCards } from '@/services/card.service';
+import {
+  deleteCardFromLoggedUser,
+  getCardsFromLoggedUser,
+} from '@/services/card.service';
 import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function AddCard() {
+export default function MyCards() {
   const [cards, setCards] = useState<CardI[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [pageInfo, setPageInfo] = useState<GetAllCardsResponseI>({
-    list: [],
-    rpp: 0,
-    page: 1,
-    more: false,
-  });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [alertSeverity, setAlertSeverity] = useState<
     'success' | 'error' | 'warning' | 'info'
   >('info');
 
-  const fetchCards = async (page: number) => {
+  const fetchCards = async () => {
     setLoading(true);
     try {
-      const response = await getAllCards({ page });
-      setCards(response.list);
-      setPageInfo(response);
+      const response = await getCardsFromLoggedUser();
+      setCards(response);
     } catch (error) {
       console.error('Error fetching cards:', error);
       setAlertMessage('Erro ao carregar os cards');
+      setAlertSeverity('error');
       setOpenAlert(true);
     } finally {
       setLoading(false);
@@ -39,27 +34,13 @@ export default function AddCard() {
   };
 
   useEffect(() => {
-    fetchCards(pageInfo.page);
-  }, [pageInfo.page]);
+    fetchCards();
+  }, []);
 
-  const handlePageChange = (newPage: number) => {
-    setPageInfo((prevState: GetAllCardsResponseI) => ({
-      ...prevState,
-      page: newPage,
-    }));
-  };
-
-  const handleAddCard = async (cardId: string) => {
-    try {
-      await addCardsToUser([cardId]);
-      setAlertMessage('Card adicionado com sucesso!');
-      setAlertSeverity('success');
-      setOpenAlert(true);
-    } catch (error) {
-      setAlertMessage('Erro ao adicionar o card');
-      setAlertSeverity('error');
-      setOpenAlert(true);
-    }
+  const handleRemoveCard = async (cardId: string) => {
+    setAlertMessage('Endpoint não existe na API');
+    setAlertSeverity('error');
+    setOpenAlert(true);
   };
 
   return (
@@ -80,18 +61,17 @@ export default function AddCard() {
                     <h2 className="text-center">{card.name}</h2>
                     <div>
                       <Button
-                        className="w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                        className="w-full bg-red-600 px-8 py-1 normal-case hover:bg-red-500"
                         variant="contained"
-                        onClick={() => handleAddCard(card.id)}
+                        onClick={() => handleRemoveCard(card.id)}
                       >
-                        <span>Adicionar</span>
+                        <span>Remover</span>
                       </Button>
                     </div>
                   </Card>
                 </Grid>
               ))}
             </Grid>
-            <Pagination pageInfo={pageInfo} onPageChange={handlePageChange} />
           </>
         )}
         <Snackbar

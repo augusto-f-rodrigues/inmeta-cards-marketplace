@@ -1,11 +1,11 @@
 import { useRouter } from 'next/navigation';
 import api from './axios-setup.service';
-import { LoginResponse } from '@/interfaces/login-response.interface';
+import { LoginResponseI } from '@/interfaces/login-response.interface';
 
 export const login = async (
   email: string,
   password: string,
-): Promise<LoginResponse> => {
+): Promise<LoginResponseI> => {
   try {
     const response = await api.post(`/login`, { email, password });
     return response.data;
@@ -18,6 +18,7 @@ export const login = async (
 export const logOut = async () => {
   try {
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
     const router = useRouter();
     router.push('/');
   } catch (error) {
