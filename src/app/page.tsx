@@ -6,7 +6,7 @@ import {
   TradeInfoI,
 } from '@/interfaces/trade-response.interface';
 import { getAllTrades } from '@/services/trade.service';
-import { Grid, Paper } from '@mui/material';
+import { CircularProgress, Grid, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -36,9 +36,10 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-
       {loading ? (
-        <div>Loading...</div>
+        <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+          <CircularProgress color="inherit" />
+        </div>
       ) : (
         <Grid container spacing={2} className="p-4">
           {trades.map((trade) => (

@@ -58,7 +58,9 @@ export default function AddCard() {
       <Navbar />
       <section className="p-10">
         {loading ? (
-          <CircularProgress />
+          <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+            <CircularProgress color="inherit" />
+          </div>
         ) : (
           <>
             <Grid container spacing={3}>

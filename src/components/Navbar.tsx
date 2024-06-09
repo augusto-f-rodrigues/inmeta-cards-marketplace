@@ -1,4 +1,5 @@
 'use client';
+import { orange500 } from '@/constants/tailwind-theme-colors.constants';
 import useUser from '@/hooks/useUser';
 import { Logout } from '@mui/icons-material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -6,13 +7,8 @@ import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Navbar() {
-  const orange500 = fullConfig.theme?.colors?.orange['500'];
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const user = useUser();
 
