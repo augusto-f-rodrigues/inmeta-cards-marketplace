@@ -95,5 +95,15 @@ const createTrade = async (
   }
 };
 
-export { createTrade, getAllTrades, getAllTradesFromLoggedUser };
+const deleteTrade = async (tradeId: string): Promise<void> => {
+  try {
+    await api.delete(`/trades/${tradeId}`);
+    return;
+  } catch (error) {
+    console.error('Error fetching create trades:', error);
+    throw error;
+  }
+};
+
+export { createTrade, getAllTrades, getAllTradesFromLoggedUser, deleteTrade };
 
