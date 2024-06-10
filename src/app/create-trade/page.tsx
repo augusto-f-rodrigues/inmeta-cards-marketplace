@@ -7,7 +7,7 @@ import {
   teal500,
 } from '@/constants/tailwind-theme-colors.constants';
 import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
-import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
+import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { CreateTradeCardRequestI } from '@/interfaces/trade-response.interface';
 import { getAllCards, getCardsFromLoggedUser } from '@/services/card.service';
@@ -40,7 +40,7 @@ export default function CreateTrade() {
   const [alertSeverity, setAlertSeverity] = useState<
     'success' | 'error' | 'warning' | 'info'
   >('info');
-  const [pageInfo, setPageInfo] = useState<GetAllCardsResponseI>({
+  const [pageInfo, setPageInfo] = useState<GetCardsResponseI>({
     list: [],
     rpp: 0,
     page: 1,
@@ -150,7 +150,7 @@ export default function CreateTrade() {
   };
 
   const handlePageChange = (newPage: number) => {
-    setPageInfo((prevState: GetAllCardsResponseI) => ({
+    setPageInfo((prevState: GetCardsResponseI) => ({
       ...prevState,
       page: newPage,
     }));

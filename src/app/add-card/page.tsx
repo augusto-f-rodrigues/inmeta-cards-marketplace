@@ -2,7 +2,7 @@
 import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
-import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
+import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { addCardsToUser, getAllCards } from '@/services/card.service';
 import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 export default function AddCard() {
   const [cards, setCards] = useState<CardI[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [pageInfo, setPageInfo] = useState<GetAllCardsResponseI>({
+  const [pageInfo, setPageInfo] = useState<GetCardsResponseI>({
     list: [],
     rpp: 0,
     page: 1,
@@ -43,7 +43,7 @@ export default function AddCard() {
   }, [pageInfo.page]);
 
   const handlePageChange = (newPage: number) => {
-    setPageInfo((prevState: GetAllCardsResponseI) => ({
+    setPageInfo((prevState: GetCardsResponseI) => ({
       ...prevState,
       page: newPage,
     }));

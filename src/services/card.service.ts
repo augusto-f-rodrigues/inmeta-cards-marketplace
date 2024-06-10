@@ -1,6 +1,6 @@
 import {
   AddCardsRequestI,
-  GetAllCardsResponseI,
+  GetCardsResponseI,
 } from '@/interfaces/card-response.interface';
 import { PaginationQueryRequestI } from '@/interfaces/pagination-query-request.interface';
 import api from './axios-setup.service';
@@ -9,7 +9,7 @@ import { CardI } from '@/interfaces/card.interface';
 const getAllCards = async ({
   rpp = 20,
   page,
-}: PaginationQueryRequestI): Promise<GetAllCardsResponseI> => {
+}: PaginationQueryRequestI): Promise<GetCardsResponseI> => {
   try {
     const response = await api.get(`/cards?rpp=${rpp}&page=${page}`);
     const filteredData = response.data.list.filter(

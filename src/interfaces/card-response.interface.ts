@@ -1,6 +1,6 @@
 import { CardI } from './card.interface';
 
-export interface GetAllCardsResponseI {
+export interface GetCardsResponseI {
   list: CardI[];
   rpp: number;
   page: number;
