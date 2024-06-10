@@ -102,6 +102,21 @@ export default function CreateTrade() {
         selectedReceiveCards.map((card: CardI) => {
           return { cardId: card.id, type: 'RECEIVING' };
         });
+
+      if (offeringCards.length === 0) {
+        setAlertMessage('Ofereça ao menos uma carta');
+        setAlertSeverity('warning');
+        setOpenAlert(true);
+
+        return;
+      }
+      if (receivingCards.length === 0) {
+        setAlertMessage('Receba ao menos uma carta');
+        setAlertSeverity('warning');
+        setOpenAlert(true);
+
+        return;
+      }
       await createTrade({ cards: [...offeringCards, ...receivingCards] });
       setAlertMessage('Sucesso ao criar troca');
       setAlertSeverity('success');
