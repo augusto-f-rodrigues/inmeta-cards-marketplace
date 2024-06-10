@@ -4,6 +4,7 @@ import Pagination from '@/components/Pagination';
 import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { openAlert } from '@/redux/alertSlice';
+import { openCardDialog } from '@/redux/cardDetailSlice';
 import { addCardsToUser, getAllCards } from '@/services/card.service';
 import { Button, Card, CircularProgress, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -69,6 +70,10 @@ export default function AddCard() {
     }
   };
 
+  const handleCardClick = (card: CardI) => {
+    dispatch(openCardDialog(card));
+  };
+
   return (
     <main>
       <Navbar />
@@ -83,7 +88,9 @@ export default function AddCard() {
               {cards.map((card: CardI) => (
                 <Grid item xs={12} sm={6} md={4} key={card.id}>
                   <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
-                    <img src={card.imageUrl} alt={card.name} />
+                    <button onClick={() => handleCardClick(card)}>
+                      <img src={card.imageUrl} alt={card.name} />
+                    </button>
                     <h2 className="text-center">{card.name}</h2>
                     <div>
                       <Button

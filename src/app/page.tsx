@@ -2,16 +2,20 @@
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
 import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
+import { CardI } from '@/interfaces/card.interface';
 import {
   GetTradeResponseI,
   TradeCardI,
   TradeInfoI,
 } from '@/interfaces/trade-response.interface';
+import { openCardDialog } from '@/redux/cardDetailSlice';
 import { getAllTrades } from '@/services/trade.service';
 import { CircularProgress, Grid, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [trades, setTrades] = useState<TradeInfoI[]>([]);
   const [loading, setLoading] = useState(false);
   const [pageInfo, setPageInfo] = useState<GetTradeResponseI>({
@@ -48,6 +52,10 @@ export default function Home() {
     }));
   };
 
+  const handleCardClick = (card: CardI) => {
+    dispatch(openCardDialog(card));
+  };
+
   return (
     <main>
       <Navbar />
@@ -80,11 +88,13 @@ export default function Home() {
                         )
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
-                            <img
-                              src={el.card.imageUrl}
-                              alt={el.card.name}
-                              className="w-full"
-                            />
+                            <button onClick={() => handleCardClick(el.card)}>
+                              <img
+                                src={el.card.imageUrl}
+                                alt={el.card.name}
+                                className="w-full"
+                              />
+                            </button>
                           </Grid>
                         ))}
                     </Grid>
@@ -102,11 +112,13 @@ export default function Home() {
                         )
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
-                            <img
-                              src={el.card.imageUrl}
-                              alt={el.card.name}
-                              className="w-full"
-                            />
+                            <button onClick={() => handleCardClick(el.card)}>
+                              <img
+                                src={el.card.imageUrl}
+                                alt={el.card.name}
+                                className="w-full"
+                              />
+                            </button>
                           </Grid>
                         ))}
                     </Grid>

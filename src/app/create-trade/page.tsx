@@ -10,6 +10,7 @@ import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { CreateTradeCardRequestI } from '@/interfaces/trade-response.interface';
 import { openAlert } from '@/redux/alertSlice';
+import { openCardDialog } from '@/redux/cardDetailSlice';
 import { getAllCards, getCardsFromLoggedUser } from '@/services/card.service';
 import { createTrade } from '@/services/trade.service';
 import {
@@ -170,6 +171,10 @@ export default function CreateTrade() {
     }));
   };
 
+  const handleCardClick = (card: CardI) => {
+    dispatch(openCardDialog(card));
+  };
+
   return (
     <main>
       <Navbar />
@@ -226,6 +231,13 @@ export default function CreateTrade() {
                             <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
                               <img src={card.imageUrl} alt={card.name} />
                               <p>{card.name}</p>
+                              <Button
+                                className="bg-teal-600 px-8 py-1 normal-case hover:bg-orange-500"
+                                variant="contained"
+                                onClick={() => handleCardClick(card)}
+                              >
+                                <span>Detalhes</span>
+                              </Button>
                             </Card>
                           }
                         />
@@ -259,6 +271,13 @@ export default function CreateTrade() {
                                 <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
                                   <img src={card.imageUrl} alt={card.name} />
                                   <p>{card.name}</p>
+                                  <Button
+                                    className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                                    variant="contained"
+                                    onClick={() => handleCardClick(card)}
+                                  >
+                                    <span>Detalhes</span>
+                                  </Button>
                                 </Card>
                               }
                             />
@@ -283,6 +302,7 @@ export default function CreateTrade() {
                       {selectedOfferCards.map((card) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
                           <Card
+                            onClick={() => handleCardClick(card)}
                             key={card.id}
                             className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
                           >
@@ -302,6 +322,7 @@ export default function CreateTrade() {
                       {selectedReceiveCards.map((card) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
                           <Card
+                            onClick={() => handleCardClick(card)}
                             key={card.id}
                             className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
                           >
