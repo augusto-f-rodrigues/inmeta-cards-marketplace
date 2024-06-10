@@ -5,10 +5,10 @@ import {
   GetTradeResponseI,
   TradeInfoI,
 } from '@/interfaces/trade-response.interface';
-import api from './axios-setup.service';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import useUser from '@/hooks/useUser';
+import api from './axios-setup.service';
+import { getLoggedUserData } from './user.service';
 
 const capitalizeWords = (str: string) => {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
@@ -45,11 +45,7 @@ const getAllTrades = async ({
 
 const getAllTradesFromLoggedUser = async (): Promise<GetTradeResponseI> => {
   try {
-    const user = useUser();
-
-    if (!user) {
-      throw new Error('User not logged in');
-    }
+    const user = await getLoggedUserData();
 
     let allTrades: TradeInfoI[] = [];
     let currentPage = 1;
@@ -99,4 +95,5 @@ const createTrade = async (
   }
 };
 
-export { getAllTrades, getAllTradesFromLoggedUser, createTrade };
+export { createTrade, getAllTrades, getAllTradesFromLoggedUser };
+
