@@ -2,7 +2,7 @@ import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { CardI } from './card.interface';
 import { UserI } from './user.interface';
 
-export interface GetAllTradeResponseI {
+export interface GetTradeResponseI {
   list: TradeInfoI[];
   rpp: number;
   page: number;
