@@ -251,6 +251,14 @@ export default function CreateTrade() {
                         />
                       </Grid>
                     ))}
+                    {userCards.length === 0 && (
+                      <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+                        <h3>
+                          Adicione um card através do "Menu" &gt; "Adicionar
+                          Card" antes de criar uma troca
+                        </h3>
+                      </div>
+                    )}
                   </Grid>
                 </div>
               ) : activeStep === 1 ? (
