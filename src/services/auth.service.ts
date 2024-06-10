@@ -1,7 +1,6 @@
-import { useRouter } from 'next/navigation';
-import api from './axios-setup.service';
 import { LoginResponseI } from '@/interfaces/login-response.interface';
 import { AxiosResponse } from 'axios';
+import api from './axios-setup.service';
 
 export const login = async (email: string, password: string): Promise<void> => {
   try {
@@ -22,8 +21,7 @@ export const logOut = async () => {
   try {
     localStorage.removeItem('token');
     localStorage.removeItem('name');
-    const router = useRouter();
-    router.push('/');
+    window.location.href = '/login';
   } catch (error) {
     console.error('Erro ao fazer logout:', error);
     throw error;

@@ -1,5 +1,6 @@
 'use client';
 import { orange500 } from '@/constants/tailwind-theme-colors.constants';
+import { logOut } from '@/services/auth.service';
 import { Logout } from '@mui/icons-material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
@@ -50,6 +51,11 @@ export default function Navbar() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>
+                <Link href="/">
+                  <p className="text-secondary">Todas as Trocas</p>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
                 <Link href="/my-trades">
                   <p className="text-secondary">Minhas Trocas</p>
                 </Link>
@@ -70,7 +76,11 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
             </Menu>
-            <IconButton className="gap-2" style={{ color: orange500 }}>
+            <IconButton
+              onClick={logOut}
+              className="gap-2"
+              style={{ color: orange500 }}
+            >
               <p className="navbar-text text-primary text-base">Sair</p>
               <Logout />
             </IconButton>
