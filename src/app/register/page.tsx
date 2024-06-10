@@ -1,5 +1,6 @@
 'use client';
 import { openAlert } from '@/redux/alertSlice';
+import { login } from '@/services/auth.service';
 import { createUser } from '@/services/user.service';
 import { Button, FormControl, FormHelperText, TextField } from '@mui/material';
 import Link from 'next/link';
@@ -52,6 +53,7 @@ export default function Register() {
             severity: 'success',
           }),
         );
+        await login(email!, password!);
         router.push('/');
       } catch (error: any) {
         console.error(error);
