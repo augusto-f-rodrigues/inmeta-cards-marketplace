@@ -180,6 +180,7 @@ export default function CreateTrade() {
     <main>
       <Navbar />
       <section className="p-10">
+        <h2 className="text-h2 mb-4">Criar Troca</h2>
         {loading ? (
           <div className="my-20 flex w-full items-center justify-center text-orange-500">
             <CircularProgress color="inherit" />

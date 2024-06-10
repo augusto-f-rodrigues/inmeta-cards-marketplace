@@ -54,6 +54,7 @@ export default function MyCards() {
     <main>
       <Navbar />
       <section className="p-10">
+        <h2 className="text-h2 mb-4">Meus Cards</h2>
         {loading ? (
           <div className="mt-20 flex w-full items-center justify-center text-orange-500">
             <CircularProgress color="inherit" />

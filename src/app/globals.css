@@ -16,6 +16,9 @@ body {
   .text-h1 {
     @apply text-center text-2xl font-extrabold lg:text-4xl;
   }
+  .text-h2 {
+    @apply text-center text-xl font-extrabold lg:text-2xl;
+  }
   .text-primary {
     @apply text-orange-600;
   }
