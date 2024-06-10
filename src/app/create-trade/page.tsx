@@ -225,22 +225,30 @@ export default function CreateTrade() {
                         <FormControlLabel
                           control={
                             <Checkbox
+                              className="hidden"
                               checked={selectedOfferCards.includes(card)}
                               onChange={() => handleOfferCardToggle(card)}
                             />
                           }
                           label={
-                            <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
+                            <Card
+                              className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
+                                selectedOfferCards.findIndex(
+                                  (el) => el.id === card.id,
+                                ) >= 0 && 'bg-teal-300'
+                              }`}
+                            >
                               <Image
                                 width={300}
                                 height={300}
+                                className="rounded-lg"
                                 style={{ height: 'auto' }}
                                 src={card.imageUrl}
                                 alt={card.name}
                               />
                               <p>{card.name}</p>
                               <Button
-                                className="bg-teal-600 px-8 py-1 normal-case hover:bg-orange-500"
+                                className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
                                 variant="contained"
                                 onClick={() => handleCardClick(card)}
                               >
@@ -252,7 +260,7 @@ export default function CreateTrade() {
                       </Grid>
                     ))}
                     {userCards.length === 0 && (
-                      <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+                      <div className="mt-10 flex w-full items-center justify-center text-orange-500">
                         <h3>
                           Adicione um card através do "Menu" &gt; "Adicionar
                           Card" antes de criar uma troca
@@ -275,6 +283,7 @@ export default function CreateTrade() {
                             <FormControlLabel
                               control={
                                 <Checkbox
+                                  className="hidden"
                                   checked={
                                     selectedReceiveCards.findIndex(
                                       (el) => el.id === card.id,
@@ -284,8 +293,15 @@ export default function CreateTrade() {
                                 />
                               }
                               label={
-                                <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
+                                <Card
+                                  className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
+                                    selectedReceiveCards.findIndex(
+                                      (el) => el.id === card.id,
+                                    ) >= 0 && 'bg-teal-300'
+                                  }`}
+                                >
                                   <Image
+                                    className="rounded-lg"
                                     width={300}
                                     height={300}
                                     style={{ height: 'auto' }}
