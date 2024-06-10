@@ -6,13 +6,26 @@ import {
   TradeCardI,
   TradeInfoI,
 } from '@/interfaces/trade-response.interface';
-import { getAllTradesFromLoggedUser } from '@/services/trade.service';
-import { CircularProgress, Grid, Paper } from '@mui/material';
+import {
+  deleteTrade,
+  getAllTradesFromLoggedUser,
+} from '@/services/trade.service';
+import { Delete } from '@mui/icons-material';
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Modal,
+  Paper,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function MyTrades() {
   const [trades, setTrades] = useState<TradeInfoI[]>([]);
   const [loading, setLoading] = useState(false);
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [tradeToDeleteId, setTradeToDeleteId] = useState<string>('');
 
   useEffect(() => {
     fetchData();
@@ -30,6 +43,23 @@ export default function MyTrades() {
     }
   };
 
+  const handleDeleteTrade = async (tradeId: string) => {
+    try {
+      await deleteTrade(tradeId);
+      const updatedTrades = trades.filter((trade) => trade.id !== tradeId);
+      setTrades(updatedTrades);
+      setDeleteConfirmationOpen(false);
+    } catch (error) {
+      console.error('Error deleting trade:', error);
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (tradeToDeleteId) {
+      handleDeleteTrade(tradeToDeleteId);
+    }
+  };
+
   return (
     <main>
       <Navbar />
@@ -41,7 +71,7 @@ export default function MyTrades() {
         <Grid container spacing={2} className="p-4">
           {trades.map((trade) => (
             <Grid item xs={12} sm={6} md={6} lg={4} key={trade.id}>
-              <Paper elevation={3} className="p-4">
+              <Paper elevation={3} className="relative p-4">
                 <h2>
                   <strong>Quem propôs a troca:</strong> {trade.user.name}
                 </h2>
@@ -92,11 +122,47 @@ export default function MyTrades() {
                       ))}
                   </Grid>
                 </div>
+                <div className="flex w-full justify-end">
+                  <IconButton
+                    onClick={() => {
+                      setTradeToDeleteId(trade.id);
+                      setDeleteConfirmationOpen(true);
+                    }}
+                  >
+                    <Delete style={{ color: 'red' }} />
+                  </IconButton>
+                </div>
               </Paper>
             </Grid>
           ))}
         </Grid>
       )}
+      <Modal
+        open={deleteConfirmationOpen}
+        onClose={() => setDeleteConfirmationOpen(false)}
+        aria-labelledby="delete-confirmation-modal-title"
+        aria-describedby="delete-confirmation-modal-description"
+      >
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-6">
+          <p>Tem certeza que deseja excluir esta troca?</p>
+          <div className="mt-4 flex justify-end gap-2">
+            <Button
+              className="bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
+              variant="contained"
+              onClick={() => setDeleteConfirmationOpen(false)}
+            >
+              <span>Cancelar</span>
+            </Button>
+            <Button
+              className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+              variant="contained"
+              onClick={handleConfirmDelete}
+            >
+              <span>Confirmar</span>
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </main>
   );
 }
