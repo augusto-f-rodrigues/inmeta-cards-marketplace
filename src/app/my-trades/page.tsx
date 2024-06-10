@@ -6,6 +6,7 @@ import {
   TradeCardI,
   TradeInfoI,
 } from '@/interfaces/trade-response.interface';
+import { openAlert } from '@/redux/alertSlice';
 import {
   deleteTrade,
   getAllTradesFromLoggedUser,
@@ -20,8 +21,10 @@ import {
   Paper,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function MyTrades() {
+  const dispatch = useDispatch();
   const [trades, setTrades] = useState<TradeInfoI[]>([]);
   const [loading, setLoading] = useState(false);
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
@@ -49,8 +52,20 @@ export default function MyTrades() {
       const updatedTrades = trades.filter((trade) => trade.id !== tradeId);
       setTrades(updatedTrades);
       setDeleteConfirmationOpen(false);
+      dispatch(
+        openAlert({
+          message: 'Sucesso ao deletar proposta de troca!',
+          severity: 'success',
+        }),
+      );
     } catch (error) {
       console.error('Error deleting trade:', error);
+      dispatch(
+        openAlert({
+          message: 'Erro ao deletar proposta de troca!',
+          severity: 'error',
+        }),
+      );
     }
   };
 

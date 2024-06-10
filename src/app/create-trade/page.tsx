@@ -1,5 +1,4 @@
 'use client';
-import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
 import {
@@ -10,6 +9,7 @@ import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { CreateTradeCardRequestI } from '@/interfaces/trade-response.interface';
+import { openAlert } from '@/redux/alertSlice';
 import { getAllCards, getCardsFromLoggedUser } from '@/services/card.service';
 import { createTrade } from '@/services/trade.service';
 import {
@@ -19,15 +19,16 @@ import {
   CircularProgress,
   FormControlLabel,
   Grid,
-  Snackbar,
   Step,
   StepLabel,
   Stepper,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function CreateTrade() {
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
   const [userCards, setUserCards] = useState<CardI[]>([]);
   const [allCards, setAllCards] = useState<CardI[]>([]);
@@ -35,11 +36,6 @@ export default function CreateTrade() {
   const [selectedReceiveCards, setSelectedReceiveCards] = useState<CardI[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingFetchCards, setLoadingFetchCards] = useState<boolean>(false);
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
-  const [alertMessage, setAlertMessage] = useState<string>('');
-  const [alertSeverity, setAlertSeverity] = useState<
-    'success' | 'error' | 'warning' | 'info'
-  >('info');
   const [pageInfo, setPageInfo] = useState<GetCardsResponseI>({
     list: [],
     rpp: 0,
@@ -56,9 +52,12 @@ export default function CreateTrade() {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user cards:', error);
-        setAlertMessage('Erro ao carregar os cards do usuário');
-        setAlertSeverity('error');
-        setOpenAlert(true);
+        dispatch(
+          openAlert({
+            message: 'Erro ao carregar os cards do usuário',
+            severity: 'error',
+          }),
+        );
       }
     }
     fetchData();
@@ -76,9 +75,12 @@ export default function CreateTrade() {
       setPageInfo(allCardsData);
     } catch (error) {
       console.error('Error fetching all cards:', error);
-      setAlertMessage('Erro ao carregar todos os cards');
-      setAlertSeverity('error');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Erro ao carregar todos os cards',
+          severity: 'error',
+        }),
+      );
     } finally {
       setLoadingFetchCards(false);
     }
@@ -105,29 +107,41 @@ export default function CreateTrade() {
         });
 
       if (offeringCards.length === 0) {
-        setAlertMessage('Ofereça ao menos uma carta');
-        setAlertSeverity('warning');
-        setOpenAlert(true);
+        dispatch(
+          openAlert({
+            message: 'Ofereça ao menos uma carta',
+            severity: 'warning',
+          }),
+        );
 
         return;
       }
       if (receivingCards.length === 0) {
-        setAlertMessage('Receba ao menos uma carta');
-        setAlertSeverity('warning');
-        setOpenAlert(true);
+        dispatch(
+          openAlert({
+            message: 'Receba ao menos uma carta',
+            severity: 'warning',
+          }),
+        );
 
         return;
       }
       await createTrade({ cards: [...offeringCards, ...receivingCards] });
-      setAlertMessage('Sucesso ao criar troca');
-      setAlertSeverity('success');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Sucesso ao criar troca',
+          severity: 'success',
+        }),
+      );
       router.push('/my-trades');
     } catch (error) {
       console.error('Error fetching create cards:', error);
-      setAlertMessage('Erro ao criar troca');
-      setAlertSeverity('error');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Erro ao criar troca',
+          severity: 'error',
+        }),
+      );
     }
   };
 
@@ -330,14 +344,6 @@ export default function CreateTrade() {
             </div>
           </>
         )}
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={openAlert}
-          autoHideDuration={1500}
-          onClose={() => setOpenAlert(false)}
-        >
-          <CustomAlert severity={alertSeverity} message={alertMessage} />
-        </Snackbar>
       </section>
     </main>
   );

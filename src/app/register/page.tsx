@@ -1,18 +1,14 @@
 'use client';
-import {
-  FormControl,
-  TextField,
-  Button,
-  FormHelperText,
-  Snackbar,
-} from '@mui/material';
-import Link from 'next/link';
-import { useState } from 'react';
-import CustomAlert from '@/components/CustomAlert';
-import { useRouter } from 'next/navigation';
+import { openAlert } from '@/redux/alertSlice';
 import { createUser } from '@/services/user.service';
+import { Button, FormControl, FormHelperText, TextField } from '@mui/material';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Register() {
+  const dispatch = useDispatch();
   const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -21,11 +17,6 @@ export default function Register() {
     email: false,
     password: false,
   });
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertSeverity, setAlertSeverity] = useState<
-    'success' | 'error' | 'warning' | 'info'
-  >('info');
-  const [openAlert, setOpenAlert] = useState(false);
   const router = useRouter();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,15 +46,21 @@ export default function Register() {
           email: email!,
           password: password!,
         });
-        setAlertMessage('Usuário registrado com sucesso!');
-        setAlertSeverity('success');
-        setOpenAlert(true);
+        dispatch(
+          openAlert({
+            message: 'Usuário registrado com sucesso!',
+            severity: 'success',
+          }),
+        );
         router.push('/');
       } catch (error: any) {
         console.error(error);
-        setAlertMessage(error.response.data.message || 'Erro ao criar usuário');
-        setAlertSeverity('error');
-        setOpenAlert(true);
+        dispatch(
+          openAlert({
+            message: error.response.data.message || 'Erro ao criar usuário',
+            severity: 'error',
+          }),
+        );
       }
     }
   };
@@ -152,14 +149,6 @@ export default function Register() {
           </Button>
         </Link>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={openAlert}
-        autoHideDuration={1500}
-        onClose={() => setOpenAlert(false)}
-      >
-        <CustomAlert severity={alertSeverity} message={alertMessage!} />
-      </Snackbar>
     </main>
   );
 }

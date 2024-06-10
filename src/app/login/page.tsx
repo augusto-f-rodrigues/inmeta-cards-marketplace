@@ -1,26 +1,17 @@
 'use client';
-import {
-  FormControl,
-  TextField,
-  Button,
-  FormHelperText,
-  Snackbar,
-} from '@mui/material';
-import { useState } from 'react';
-import Link from 'next/link';
+import { openAlert } from '@/redux/alertSlice';
 import { login } from '@/services/auth.service';
-import CustomAlert from '@/components/CustomAlert';
+import { Button, FormControl, FormHelperText, TextField } from '@mui/material';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [errors, setErrors] = useState({ email: false, password: false });
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertSeverity, setAlertSeverity] = useState<
-    'success' | 'error' | 'warning' | 'info'
-  >('info');
-  const [openAlert, setOpenAlert] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (event: any) => {
@@ -39,7 +30,7 @@ export default function Login() {
 
     if (!newErrors.email && !newErrors.password) {
       try {
-        await login(email!, password!);        
+        await login(email!, password!);
         router.push('/');
       } catch (error: any) {
         console.error('Error logging in:', error);
@@ -47,11 +38,12 @@ export default function Login() {
           error.response.data.message === 'Incorrect password/email'
             ? 'Email e/ou senha incorreto'
             : error.response.data.message;
-        setAlertMessage(
-          error.response.data.message || 'Erro ao realizar login',
+        dispatch(
+          openAlert({
+            message: error.response.data.message || 'Erro ao realizar login',
+            severity: 'error',
+          }),
         );
-        setAlertSeverity('error');
-        setOpenAlert(true);
       }
     }
   };
@@ -123,14 +115,6 @@ export default function Login() {
           </Button>
         </Link>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={openAlert}
-        autoHideDuration={1500}
-        onClose={() => setOpenAlert(false)}
-      >
-        <CustomAlert severity={alertSeverity} message={alertMessage!} />
-      </Snackbar>
     </main>
   );
 }

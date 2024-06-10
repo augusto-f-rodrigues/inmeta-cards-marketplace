@@ -1,14 +1,16 @@
 'use client';
-import CustomAlert from '@/components/CustomAlert';
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
 import { GetCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
+import { openAlert } from '@/redux/alertSlice';
 import { addCardsToUser, getAllCards } from '@/services/card.service';
-import { Button, Card, CircularProgress, Grid, Snackbar } from '@mui/material';
+import { Button, Card, CircularProgress, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function AddCard() {
+  const dispatch = useDispatch();
   const [cards, setCards] = useState<CardI[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [pageInfo, setPageInfo] = useState<GetCardsResponseI>({
@@ -17,11 +19,6 @@ export default function AddCard() {
     page: 1,
     more: false,
   });
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
-  const [alertMessage, setAlertMessage] = useState<string>('');
-  const [alertSeverity, setAlertSeverity] = useState<
-    'success' | 'error' | 'warning' | 'info'
-  >('info');
 
   const fetchCards = async (page: number) => {
     setLoading(true);
@@ -31,8 +28,12 @@ export default function AddCard() {
       setPageInfo(response);
     } catch (error) {
       console.error('Error fetching cards:', error);
-      setAlertMessage('Erro ao carregar os cards');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Erro ao carregar os cards',
+          severity: 'success',
+        }),
+      );
     } finally {
       setLoading(false);
     }
@@ -52,13 +53,19 @@ export default function AddCard() {
   const handleAddCard = async (cardId: string) => {
     try {
       await addCardsToUser([cardId]);
-      setAlertMessage('Card adicionado com sucesso!');
-      setAlertSeverity('success');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Card adicionado com sucesso!',
+          severity: 'success',
+        }),
+      );
     } catch (error) {
-      setAlertMessage('Erro ao adicionar o card');
-      setAlertSeverity('error');
-      setOpenAlert(true);
+      dispatch(
+        openAlert({
+          message: 'Erro ao adicionar o card.',
+          severity: 'error',
+        }),
+      );
     }
   };
 
@@ -94,14 +101,6 @@ export default function AddCard() {
             <Pagination pageInfo={pageInfo} onPageChange={handlePageChange} />
           </>
         )}
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={openAlert}
-          autoHideDuration={1500}
-          onClose={() => setOpenAlert(false)}
-        >
-          <CustomAlert severity={alertSeverity} message={alertMessage} />
-        </Snackbar>
       </section>
     </main>
   );
