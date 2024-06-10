@@ -54,13 +54,8 @@ export default function Navbar() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <p className="text-secondary">Todas as Trocas</p>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link href="/my-trades">
-                  <p className="text-secondary">Minhas Trocas</p>
+                <Link href="/add-card">
+                  <p className="text-secondary">Adicionar Card</p>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
@@ -74,8 +69,13 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link href="/add-card">
-                  <p className="text-secondary">Adicionar Card</p>
+                <Link href="/my-trades">
+                  <p className="text-secondary">Minhas Trocas</p>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link href="/">
+                  <p className="text-secondary">Todas as Trocas</p>
                 </Link>
               </MenuItem>
             </Menu>

@@ -123,26 +123,24 @@ export default function Register() {
           )}
         </FormControl>
 
-        <div className="flex w-full flex-col items-center gap-4 md:flex-row">
-          <Link className="w-full md:max-w-52" href="/login">
-            <Button
-              className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
-              variant="contained"
-            >
-              <span>Fazer Login</span>
-            </Button>
-          </Link>
+        <Button
+          className="mb-4 w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+          variant="contained"
+          type="submit"
+        >
+          <span>Registrar</span>
+        </Button>
 
+        <Link className="w-full" href="/login">
           <Button
-            className="mb-4 w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500 md:mb-0 md:max-w-52"
+            className="mb-4 w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
             variant="contained"
-            type="submit"
           >
-            <span>Registrar</span>
+            <span>Fazer Login</span>
           </Button>
-        </div>
+        </Link>
 
-        <Link className="mt-4 w-full" href="/">
+        <Link className="w-full" href="/">
           <Button
             className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
             variant="contained"

@@ -87,26 +87,24 @@ export default function Login() {
           )}
         </FormControl>
 
-        <div className="flex w-full flex-col items-center gap-4 md:flex-row">
-          <Link className="w-full md:max-w-52" href="/register">
-            <Button
-              className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
-              variant="contained"
-            >
-              <span>Cadastre-se</span>
-            </Button>
-          </Link>
+        <Button
+          className="mb-4 w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+          variant="contained"
+          type="submit"
+        >
+          <span>Entrar</span>
+        </Button>
 
+        <Link className="w-full" href="/register">
           <Button
-            className="mb-4 w-full bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500 md:mb-0 md:max-w-52"
+            className="mb-4 w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
             variant="contained"
-            type="submit"
           >
-            <span>Entrar</span>
+            <span>Cadastre-se</span>
           </Button>
-        </div>
+        </Link>
 
-        <Link className="mt-4 w-full" href="/">
+        <Link className="w-full" href="/">
           <Button
             className="w-full bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
             variant="contained"
