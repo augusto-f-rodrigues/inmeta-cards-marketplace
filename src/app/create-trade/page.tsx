@@ -6,6 +6,7 @@ import {
   orange500,
   teal500,
 } from '@/constants/tailwind-theme-colors.constants';
+import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { GetAllCardsResponseI } from '@/interfaces/card-response.interface';
 import { CardI } from '@/interfaces/card.interface';
 import { CreateTradeCardRequestI } from '@/interfaces/trade-response.interface';
@@ -95,12 +96,12 @@ export default function CreateTrade() {
     try {
       const offeringCards: CreateTradeCardRequestI[] = selectedOfferCards.map(
         (card: CardI) => {
-          return { cardId: card.id, type: 'OFFERING' };
+          return { cardId: card.id, type: TRADE_CARD_TYPES_ENUM.offering };
         },
       );
       const receivingCards: CreateTradeCardRequestI[] =
         selectedReceiveCards.map((card: CardI) => {
-          return { cardId: card.id, type: 'RECEIVING' };
+          return { cardId: card.id, type: TRADE_CARD_TYPES_ENUM.receiving };
         });
 
       if (offeringCards.length === 0) {

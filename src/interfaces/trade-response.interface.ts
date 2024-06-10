@@ -1,3 +1,4 @@
+import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { CardI } from './card.interface';
 import { UserI } from './user.interface';
 
@@ -30,7 +31,7 @@ export interface CreateTradeRequestI {
 
 export interface CreateTradeCardRequestI {
   cardId: string;
-  type: 'OFFERING' | 'RECEIVING';
+  type: TRADE_CARD_TYPES_ENUM;
 }
 
 export interface CreateTradeResponseI {

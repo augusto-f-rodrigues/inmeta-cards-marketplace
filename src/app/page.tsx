@@ -1,5 +1,6 @@
 'use client';
 import Navbar from '@/components/Navbar';
+import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import {
   GetAllTradeResponseI,
   TradeCardI,
@@ -43,22 +44,53 @@ export default function Home() {
       ) : (
         <Grid container spacing={2} className="p-4">
           {trades.map((trade) => (
-            <Grid item xs={12} sm={6} md={4} key={trade.id}>
+            <Grid item xs={12} sm={6} md={6} lg={4} key={trade.id}>
               <Paper elevation={3} className="p-4">
-                <h2>{trade.user.name}</h2>
-                <p>{trade.createdAt}</p>
-                <p>{trade.tradeCards.length} cards</p>
-                <Grid container spacing={1}>
-                  {trade.tradeCards.map((el: TradeCardI) => (
-                    <Grid item xs={4} key={el.card.id}>
-                      <img
-                        src={el.card.imageUrl}
-                        alt={el.card.name}
-                        className="w-full"
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
+                <h2>Quem propôs a troca: {trade.user.name}</h2>
+                <p>Data de criação: {trade.createdAt}</p>
+                <div>
+                  <p className="mb-2 font-semibold">
+                    Cartas <span className="text-orange-500">oferecidas</span>:
+                  </p>
+                  <Grid container spacing={1}>
+                    {trade.tradeCards
+                      .filter(
+                        (el: TradeCardI) =>
+                          el.type === TRADE_CARD_TYPES_ENUM.offering,
+                      )
+                      .map((el: TradeCardI) => (
+                        <Grid item xs={4} key={el.card.id}>
+                          <img
+                            src={el.card.imageUrl}
+                            alt={el.card.name}
+                            className="w-full"
+                          />
+                        </Grid>
+                      ))}
+                  </Grid>
+                </div>
+                <div>
+                  <p className="mb-2 font-semibold">
+                    Cartas que serão{' '}
+                    <span className="text-teal-500">recebidas</span>:
+                  </p>
+                  <Grid container spacing={1}>
+                    {trade.tradeCards
+                      .filter(
+                        (el: TradeCardI) =>
+                          el.type === TRADE_CARD_TYPES_ENUM.receiving,
+                      )
+                      .map((el: TradeCardI) => (
+                        <Grid item xs={4} key={el.card.id}>
+                          <img
+                            src={el.card.imageUrl}
+                            alt={el.card.name}
+                            className="w-full"
+                          />
+                        </Grid>
+                      ))}
+                  </Grid>
+                </div>
               </Paper>
             </Grid>
           ))}

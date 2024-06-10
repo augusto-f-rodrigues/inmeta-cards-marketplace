@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'INMETA - Card Marketplace',
+  title: 'Duel Cards - Card Marketplace',
   description: 'Marketplace para troca de cartas criado por Augusto Rodrigues',
 };
 

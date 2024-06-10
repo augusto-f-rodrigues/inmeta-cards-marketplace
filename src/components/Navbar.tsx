@@ -21,13 +21,14 @@ export default function Navbar() {
 
   return (
     <AppBar position="static">
-      <Toolbar className="justify-between bg-neutral-50">
+      <Toolbar className="justify-between bg-neutral-50 p-4">
         <Link href="/">
           <Image
-            src="/images/inmeta-logo.svg"
-            alt="Inmeta Logo"
+            src="/images/logo.svg"
+            alt="Duel Cards Logo"
             width={150}
             height={50}
+            priority
           />
         </Link>
         {username ? (
