@@ -1,3 +1,4 @@
+'use client';
 import { LoginResponseI } from '@/interfaces/login-response.interface';
 import { AxiosResponse } from 'axios';
 import api from './axios-setup.service';
@@ -8,8 +9,10 @@ export const login = async (email: string, password: string): Promise<void> => {
       `/login`,
       { email, password },
     );
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('name', response.data.user.name);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('name', response.data.user.name);
+    }
     return;
   } catch (error) {
     console.error('Error fetching user by id:', error);
@@ -19,8 +22,10 @@ export const login = async (email: string, password: string): Promise<void> => {
 
 export const logOut = async () => {
   try {
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('name');
+    }
     window.location.href = '/login';
   } catch (error) {
     console.error('Erro ao fazer logout:', error);

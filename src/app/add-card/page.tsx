@@ -7,6 +7,7 @@ import { openAlert } from '@/redux/alertSlice';
 import { openCardDialog } from '@/redux/cardDetailSlice';
 import { addCardsToUser, getAllCards } from '@/services/card.service';
 import { Button, Card, CircularProgress, Grid } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -89,7 +90,13 @@ export default function AddCard() {
                 <Grid item xs={12} sm={6} md={4} key={card.id}>
                   <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
                     <button onClick={() => handleCardClick(card)}>
-                      <img src={card.imageUrl} alt={card.name} />
+                      <Image
+                        width={300}
+                        height={300}
+                        style={{ height: 'auto' }}
+                        src={card.imageUrl}
+                        alt={card.name}
+                      />
                     </button>
                     <h2 className="text-center">{card.name}</h2>
                     <div>

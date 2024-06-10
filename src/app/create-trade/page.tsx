@@ -24,6 +24,7 @@ import {
   StepLabel,
   Stepper,
 } from '@mui/material';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -45,29 +46,6 @@ export default function CreateTrade() {
   });
   const router = useRouter();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const userCardsData = await getCardsFromLoggedUser();
-        setUserCards(userCardsData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user cards:', error);
-        dispatch(
-          openAlert({
-            message: 'Erro ao carregar os cards do usuário',
-            severity: 'error',
-          }),
-        );
-      }
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchCards(pageInfo.page);
-  }, [pageInfo.page]);
-
   const fetchCards = async (page: number) => {
     setLoadingFetchCards(true);
     try {
@@ -86,6 +64,29 @@ export default function CreateTrade() {
       setLoadingFetchCards(false);
     }
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userCardsData = await getCardsFromLoggedUser();
+        setUserCards(userCardsData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user cards:', error);
+        dispatch(
+          openAlert({
+            message: 'Erro ao carregar os cards do usuário',
+            severity: 'error',
+          }),
+        );
+      }
+    }
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchCards(pageInfo.page);
+  }, [pageInfo.page]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -229,7 +230,13 @@ export default function CreateTrade() {
                           }
                           label={
                             <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
-                              <img src={card.imageUrl} alt={card.name} />
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
+                                src={card.imageUrl}
+                                alt={card.name}
+                              />
                               <p>{card.name}</p>
                               <Button
                                 className="bg-teal-600 px-8 py-1 normal-case hover:bg-orange-500"
@@ -269,7 +276,13 @@ export default function CreateTrade() {
                               }
                               label={
                                 <Card className="flex flex-col items-center justify-center gap-y-2 p-4">
-                                  <img src={card.imageUrl} alt={card.name} />
+                                  <Image
+                                    width={300}
+                                    height={300}
+                                    style={{ height: 'auto' }}
+                                    src={card.imageUrl}
+                                    alt={card.name}
+                                  />
                                   <p>{card.name}</p>
                                   <Button
                                     className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
@@ -306,7 +319,13 @@ export default function CreateTrade() {
                             key={card.id}
                             className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
                           >
-                            <img src={card.imageUrl} alt={card.name} />
+                            <Image
+                              width={300}
+                              height={300}
+                              style={{ height: 'auto' }}
+                              src={card.imageUrl}
+                              alt={card.name}
+                            />
                             <p>{card.name}</p>
                           </Card>
                         </Grid>
@@ -326,7 +345,13 @@ export default function CreateTrade() {
                             key={card.id}
                             className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
                           >
-                            <img src={card.imageUrl} alt={card.name} />
+                            <Image
+                              width={300}
+                              height={300}
+                              style={{ height: 'auto' }}
+                              src={card.imageUrl}
+                              alt={card.name}
+                            />
                             <p>{card.name}</p>
                           </Card>
                         </Grid>

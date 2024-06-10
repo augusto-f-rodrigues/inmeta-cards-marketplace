@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
+import Image from 'next/image';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,7 +29,9 @@ const AppCardDetail: React.FC = () => {
       <DialogTitle>Detalhes do Card</DialogTitle>
       <DialogContent>
         <div className="flex w-full items-center justify-center">
-          <img
+          <Image
+            width={300}
+            height={300}
             src={selectedCard.imageUrl}
             alt={selectedCard.name}
             style={{ width: '300', marginBottom: '1rem' }}

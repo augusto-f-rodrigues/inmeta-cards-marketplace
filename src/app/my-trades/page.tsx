@@ -22,6 +22,7 @@ import {
   Modal,
   Paper,
 } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -114,7 +115,10 @@ export default function MyTrades() {
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
                             <button onClick={() => handleCardClick(el.card)}>
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
                                 src={el.card.imageUrl}
                                 alt={el.card.name}
                                 className="w-full"
@@ -138,7 +142,10 @@ export default function MyTrades() {
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
                             <button onClick={() => handleCardClick(el.card)}>
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
                                 src={el.card.imageUrl}
                                 alt={el.card.name}
                                 className="w-full"

@@ -10,7 +10,10 @@ import React, { useState } from 'react';
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const username = localStorage.getItem('name');
+  let username: null | string = null;
+  if (typeof window !== 'undefined') {
+    username = localStorage.getItem('name');
+  }
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

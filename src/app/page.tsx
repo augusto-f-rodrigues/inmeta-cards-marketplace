@@ -11,6 +11,7 @@ import {
 import { openCardDialog } from '@/redux/cardDetailSlice';
 import { getAllTrades } from '@/services/trade.service';
 import { CircularProgress, Grid, Paper } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -24,10 +25,6 @@ export default function Home() {
     page: 1,
     more: false,
   });
-
-  useEffect(() => {
-    fetchData(pageInfo.page);
-  }, [pageInfo.page]);
 
   const fetchData = async (page: number) => {
     setLoading(true);
@@ -44,6 +41,10 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData(pageInfo.page);
+  }, [pageInfo.page]);
 
   const handlePageChange = (newPage: number) => {
     setPageInfo((prevState: GetTradeResponseI) => ({
@@ -89,7 +90,10 @@ export default function Home() {
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
                             <button onClick={() => handleCardClick(el.card)}>
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
                                 src={el.card.imageUrl}
                                 alt={el.card.name}
                                 className="w-full"
@@ -113,7 +117,10 @@ export default function Home() {
                         .map((el: TradeCardI) => (
                           <Grid item xs={4} key={el.card.id}>
                             <button onClick={() => handleCardClick(el.card)}>
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
                                 src={el.card.imageUrl}
                                 alt={el.card.name}
                                 className="w-full"

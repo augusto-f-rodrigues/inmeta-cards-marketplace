@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'gatherer.wizards.com',
+        pathname: '/Handlers/Image.ashx',
+      },
+    ],
+  },
+};
 
 export default nextConfig;

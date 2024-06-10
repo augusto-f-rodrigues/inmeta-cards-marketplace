@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { openCardDialog } from '@/redux/cardDetailSlice';
 import AppCardDetail from '@/components/AppCardDetail';
+import Image from 'next/image';
 
 export default function MyCards() {
   const dispatch = useDispatch();
@@ -66,7 +67,13 @@ export default function MyCards() {
                     className="flex cursor-pointer flex-col items-center justify-center gap-y-2 p-4"
                     onClick={() => handleCardClick(card)}
                   >
-                    <img src={card.imageUrl} alt={card.name} />
+                    <Image
+                      width={300}
+                      height={300}
+                      style={{ height: 'auto' }}
+                      src={card.imageUrl}
+                      alt={card.name}
+                    />
                     <h2 className="text-center">{card.name}</h2>
                     <div>
                       <Button
