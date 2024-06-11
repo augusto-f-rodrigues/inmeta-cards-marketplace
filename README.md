@@ -53,7 +53,7 @@ Certifique-se de ter o Node.js e o npm instalados.
 Clone o repositório e instale as dependências:
 
 ```bash
-git clone https://github.com/seu-usuario/inmeta-cards-marketplace
+git clone https://github.com/augusto-f-rodrigues/inmeta-cards-marketplace
 cd inmeta-cards-marketplace
 npm install
 ```
