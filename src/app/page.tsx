@@ -44,7 +44,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [pageInfo, setPageInfo] = useState<GetTradeResponseI>({
     list: [],
-    rpp: 10,
+    rpp: 6,
     page: 1,
     more: false,
   });
@@ -95,9 +95,24 @@ export default function Home() {
   return (
     <main>
       <Navbar />
+      <div className="flex max-h-[700px] items-center justify-center overflow-hidden bg-[#F3EECB]">
+        <Image
+          src="/svg/banner.svg"
+          alt="Banner duel cards"
+          width={1920}
+          height={400}
+          style={{
+            width: '100%',
+            height: 'auto',
+            maxHeight: '100%',
+            objectFit: 'contain',
+          }}
+          priority
+        />
+      </div>
       <section className="section-container">
         <div className="content-container">
-          <h2 className="text-h2 mb-4">Todas as Trocas</h2>
+          <h2 className="text-h2 my-4">Todas as Trocas</h2>
 
           {loading ? (
             <div className="mt-20 flex w-full items-center justify-center text-orange-500">

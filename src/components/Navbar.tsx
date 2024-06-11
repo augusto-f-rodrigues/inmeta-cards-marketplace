@@ -28,7 +28,7 @@ export default function Navbar() {
       <Toolbar className="justify-between bg-neutral-50 p-4">
         <Link href="/">
           <Image
-            src="/images/logo.svg"
+            src="/svg/logo.svg"
             alt="Duel Cards Logo"
             width={150}
             height={50}
