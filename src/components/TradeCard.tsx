@@ -1,5 +1,3 @@
-// TradeCard.tsx
-
 import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { TradeCardI, TradeInfoI } from '@/interfaces/trade-response.interface';
 import { openAlert } from '@/redux/alertSlice';
