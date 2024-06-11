@@ -1,6 +1,7 @@
 'use client';
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
+import TradeCard from '@/components/TradeCard';
 import { TRADE_CARD_TYPES_ENUM } from '@/enums/trade-card-types.enum';
 import { CardI } from '@/interfaces/card.interface';
 import {
@@ -122,114 +123,12 @@ export default function Home() {
             <>
               <Grid container spacing={2} className="p-4">
                 {trades.map((trade) => (
-                  <Grid item xs={12} sm={6} md={6} lg={4} key={trade.id}>
-                    <Paper elevation={3} className="relative px-4 pb-12 pt-4">
-                      <h2>
-                        <strong>Quem propôs a troca:</strong>{' '}
-                        {trade.user.name.slice(0, 15)}{' '}
-                        {trade.user.name.length >= 15 && '...'}
-                      </h2>
-                      <p className="my-2">
-                        <strong>Data de criação:</strong> {trade.createdAt}
-                      </p>
-                      <div>
-                        <p className="my-2 font-semibold">
-                          Cartas{' '}
-                          <span className="text-orange-500">oferecidas</span>{' '}
-                          por {trade.user.name.slice(0, 15)}{' '}
-                          {trade.user.name.length >= 15 && '...'} :
-                        </p>
-                        <Grid container spacing={1}>
-                          {trade.tradeCards
-                            .filter(
-                              (el: TradeCardI) =>
-                                el.type === TRADE_CARD_TYPES_ENUM.offering,
-                            )
-                            .slice(0, 2)
-                            .map((el: TradeCardI) => (
-                              <Grid item xs={4} key={el.card.id}>
-                                <button
-                                  onClick={() => handleCardClick(el.card)}
-                                >
-                                  <Image
-                                    width={300}
-                                    height={300}
-                                    style={{ height: 'auto' }}
-                                    src={el.card.imageUrl}
-                                    alt={el.card.name}
-                                    className="w-full"
-                                  />
-                                </button>
-                              </Grid>
-                            ))}
-                          {trade.tradeCards.filter(
-                            (el: TradeCardI) =>
-                              el.type === TRADE_CARD_TYPES_ENUM.offering,
-                          ).length > 2 && (
-                            <Grid item xs={4}>
-                              <div className="flex h-full items-center justify-center rounded-lg bg-gray-400 text-4xl font-extrabold text-white">
-                                +
-                                {trade.tradeCards.filter(
-                                  (el: TradeCardI) =>
-                                    el.type === TRADE_CARD_TYPES_ENUM.offering,
-                                ).length - 2}
-                              </div>
-                            </Grid>
-                          )}
-                        </Grid>
-                      </div>
-                      <div>
-                        <p className="my-2 font-semibold">
-                          Cartas que serão{' '}
-                          <span className="text-teal-500">recebidas</span>:
-                        </p>
-                        <Grid container spacing={1}>
-                          {trade.tradeCards
-                            .filter(
-                              (el: TradeCardI) =>
-                                el.type === TRADE_CARD_TYPES_ENUM.receiving,
-                            )
-                            .slice(0, 2)
-                            .map((el: TradeCardI) => (
-                              <Grid item xs={4} key={el.card.id}>
-                                <button
-                                  onClick={() => handleCardClick(el.card)}
-                                >
-                                  <Image
-                                    width={300}
-                                    height={300}
-                                    style={{ height: 'auto' }}
-                                    src={el.card.imageUrl}
-                                    alt={el.card.name}
-                                    className="w-full"
-                                  />
-                                </button>
-                              </Grid>
-                            ))}
-                          {trade.tradeCards.filter(
-                            (el: TradeCardI) =>
-                              el.type === TRADE_CARD_TYPES_ENUM.receiving,
-                          ).length > 2 && (
-                            <Grid item xs={4}>
-                              <div className="flex h-full items-center justify-center rounded-lg bg-gray-400 text-4xl font-extrabold text-white">
-                                +
-                                {trade.tradeCards.filter(
-                                  (el: TradeCardI) =>
-                                    el.type === TRADE_CARD_TYPES_ENUM.receiving,
-                                ).length - 2}
-                              </div>
-                            </Grid>
-                          )}
-                        </Grid>
-                      </div>
-                      <button
-                        onClick={() => handleOpenModal(trade)}
-                        className="absolute bottom-0 left-0 w-full cursor-pointer bg-gray-200 p-2 text-center text-gray-800 hover:bg-gray-300"
-                      >
-                        <span>Ver detalhes</span>
-                      </button>
-                    </Paper>
-                  </Grid>
+                  <TradeCard
+                    key={trade.id}
+                    trade={trade}
+                    onCardClick={handleCardClick}
+                    onOpenModal={handleOpenModal}
+                  />
                 ))}
               </Grid>
               <Pagination
