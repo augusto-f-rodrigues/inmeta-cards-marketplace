@@ -179,242 +179,246 @@ export default function CreateTrade() {
   return (
     <main>
       <Navbar />
-      <section className="p-10">
-        <h2 className="text-h2 mb-4">Criar Troca</h2>
-        {loading ? (
-          <div className="my-20 flex w-full items-center justify-center text-orange-500">
-            <CircularProgress color="inherit" />
-          </div>
-        ) : (
-          <>
-            <Stepper
-              sx={{
-                '& .MuiStepIcon-root.Mui-active': { color: teal500 },
-                '& .MuiStepIcon-root.Mui-completed': { color: orange500 },
-              }}
-              activeStep={activeStep}
-            >
-              <Step>
-                <StepLabel>
-                  <span className="text-[10px] md:text-sm lg:text-base">
-                    Selecionar cards que deseja oferecer
-                  </span>
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <span className="text-[10px] md:text-sm lg:text-base">
-                    Selecionar cards que deseja receber
-                  </span>
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <span className="text-[10px] md:text-sm lg:text-base">
-                    Resumo
-                  </span>
-                </StepLabel>
-              </Step>
-            </Stepper>
-            <div>
-              {activeStep === 0 ? (
-                <div className="p-4">
-                  <Grid container spacing={2}>
-                    {userCards.map((card: CardI) => (
-                      <Grid item xs={12} sm={6} lg={3} key={card.id}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              className="hidden"
-                              checked={selectedOfferCards.includes(card)}
-                              onChange={() => handleOfferCardToggle(card)}
-                            />
-                          }
-                          label={
+      <section className="section-container">
+        <div className="content-container">
+          <h2 className="text-h2 mb-4">Criar Troca</h2>
+          {loading ? (
+            <div className="my-20 flex w-full items-center justify-center text-orange-500">
+              <CircularProgress color="inherit" />
+            </div>
+          ) : (
+            <>
+              <Stepper
+                sx={{
+                  '& .MuiStepIcon-root.Mui-active': { color: teal500 },
+                  '& .MuiStepIcon-root.Mui-completed': { color: orange500 },
+                }}
+                activeStep={activeStep}
+              >
+                <Step>
+                  <StepLabel>
+                    <span className="text-[10px] md:text-sm lg:text-base">
+                      Selecionar cards que deseja oferecer
+                    </span>
+                  </StepLabel>
+                </Step>
+                <Step>
+                  <StepLabel>
+                    <span className="text-[10px] md:text-sm lg:text-base">
+                      Selecionar cards que deseja receber
+                    </span>
+                  </StepLabel>
+                </Step>
+                <Step>
+                  <StepLabel>
+                    <span className="text-[10px] md:text-sm lg:text-base">
+                      Resumo
+                    </span>
+                  </StepLabel>
+                </Step>
+              </Stepper>
+              <div>
+                {activeStep === 0 ? (
+                  <div className="p-4">
+                    <Grid container spacing={2}>
+                      {userCards.map((card: CardI) => (
+                        <Grid item xs={12} sm={6} lg={3} key={card.id}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                className="hidden"
+                                checked={selectedOfferCards.includes(card)}
+                                onChange={() => handleOfferCardToggle(card)}
+                              />
+                            }
+                            label={
+                              <Card
+                                className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
+                                  selectedOfferCards.findIndex(
+                                    (el) => el.id === card.id,
+                                  ) >= 0 && 'bg-teal-300'
+                                }`}
+                              >
+                                <Image
+                                  width={300}
+                                  height={300}
+                                  className="rounded-lg"
+                                  style={{ height: 'auto' }}
+                                  src={card.imageUrl}
+                                  alt={card.name}
+                                />
+                                <p>{card.name}</p>
+                                <Button
+                                  className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                                  variant="contained"
+                                  onClick={() => handleCardClick(card)}
+                                >
+                                  <span>Detalhes</span>
+                                </Button>
+                              </Card>
+                            }
+                          />
+                        </Grid>
+                      ))}
+                      {userCards.length === 0 && (
+                        <div className="mt-10 flex w-full items-center justify-center text-orange-500">
+                          <h3>
+                            Adicione um card através do &quot;Menu&quot; &gt;
+                            &quot;Adicionar Card&quot; antes de criar uma troca
+                          </h3>
+                        </div>
+                      )}
+                    </Grid>
+                  </div>
+                ) : activeStep === 1 ? (
+                  <div className="p-4">
+                    <Card className="p-4">
+                      <Grid container spacing={2}>
+                        {loadingFetchCards ? (
+                          <div className="my-20 flex w-full items-center justify-center text-orange-500">
+                            <CircularProgress color="inherit" />
+                          </div>
+                        ) : (
+                          allCards.map((card: CardI) => (
+                            <Grid item xs={12} sm={6} lg={3} key={card.id}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    className="hidden"
+                                    checked={
+                                      selectedReceiveCards.findIndex(
+                                        (el) => el.id === card.id,
+                                      ) >= 0
+                                    }
+                                    onChange={() =>
+                                      handleReceiveCardToggle(card)
+                                    }
+                                  />
+                                }
+                                label={
+                                  <Card
+                                    className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
+                                      selectedReceiveCards.findIndex(
+                                        (el) => el.id === card.id,
+                                      ) >= 0 && 'bg-teal-300'
+                                    }`}
+                                  >
+                                    <Image
+                                      className="rounded-lg"
+                                      width={300}
+                                      height={300}
+                                      style={{ height: 'auto' }}
+                                      src={card.imageUrl}
+                                      alt={card.name}
+                                    />
+                                    <p>{card.name}</p>
+                                    <Button
+                                      className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                                      variant="contained"
+                                      onClick={() => handleCardClick(card)}
+                                    >
+                                      <span>Detalhes</span>
+                                    </Button>
+                                  </Card>
+                                }
+                              />
+                            </Grid>
+                          ))
+                        )}
+                      </Grid>
+                      <Pagination
+                        pageInfo={pageInfo}
+                        onPageChange={handlePageChange}
+                      />
+                    </Card>
+                  </div>
+                ) : (
+                  <div className="p-4">
+                    <p className="mb-2 font-semibold">
+                      Cartas que serão{' '}
+                      <span className="text-orange-500">oferecidas</span>:
+                    </p>
+                    <ul>
+                      <Grid container spacing={2}>
+                        {selectedOfferCards.map((card) => (
+                          <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
                             <Card
-                              className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
-                                selectedOfferCards.findIndex(
-                                  (el) => el.id === card.id,
-                                ) >= 0 && 'bg-teal-300'
-                              }`}
+                              onClick={() => handleCardClick(card)}
+                              key={card.id}
+                              className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
                             >
                               <Image
                                 width={300}
                                 height={300}
-                                className="rounded-lg"
                                 style={{ height: 'auto' }}
                                 src={card.imageUrl}
                                 alt={card.name}
                               />
                               <p>{card.name}</p>
-                              <Button
-                                className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
-                                variant="contained"
-                                onClick={() => handleCardClick(card)}
-                              >
-                                <span>Detalhes</span>
-                              </Button>
                             </Card>
-                          }
-                        />
-                      </Grid>
-                    ))}
-                    {userCards.length === 0 && (
-                      <div className="mt-10 flex w-full items-center justify-center text-orange-500">
-                        <h3>
-                          Adicione um card através do "Menu" &gt; "Adicionar
-                          Card" antes de criar uma troca
-                        </h3>
-                      </div>
-                    )}
-                  </Grid>
-                </div>
-              ) : activeStep === 1 ? (
-                <div className="p-4">
-                  <Card className="p-4">
-                    <Grid container spacing={2}>
-                      {loadingFetchCards ? (
-                        <div className="my-20 flex w-full items-center justify-center text-orange-500">
-                          <CircularProgress color="inherit" />
-                        </div>
-                      ) : (
-                        allCards.map((card: CardI) => (
-                          <Grid item xs={12} sm={6} lg={3} key={card.id}>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  className="hidden"
-                                  checked={
-                                    selectedReceiveCards.findIndex(
-                                      (el) => el.id === card.id,
-                                    ) >= 0
-                                  }
-                                  onChange={() => handleReceiveCardToggle(card)}
-                                />
-                              }
-                              label={
-                                <Card
-                                  className={`flex flex-col items-center justify-center gap-y-2 p-4 transition-colors ${
-                                    selectedReceiveCards.findIndex(
-                                      (el) => el.id === card.id,
-                                    ) >= 0 && 'bg-teal-300'
-                                  }`}
-                                >
-                                  <Image
-                                    className="rounded-lg"
-                                    width={300}
-                                    height={300}
-                                    style={{ height: 'auto' }}
-                                    src={card.imageUrl}
-                                    alt={card.name}
-                                  />
-                                  <p>{card.name}</p>
-                                  <Button
-                                    className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
-                                    variant="contained"
-                                    onClick={() => handleCardClick(card)}
-                                  >
-                                    <span>Detalhes</span>
-                                  </Button>
-                                </Card>
-                              }
-                            />
                           </Grid>
-                        ))
-                      )}
-                    </Grid>
-                    <Pagination
-                      pageInfo={pageInfo}
-                      onPageChange={handlePageChange}
-                    />
-                  </Card>
-                </div>
-              ) : (
-                <div className="p-4">
-                  <p className="mb-2 font-semibold">
-                    Cartas que serão{' '}
-                    <span className="text-orange-500">oferecidas</span>:
-                  </p>
-                  <ul>
-                    <Grid container spacing={2}>
-                      {selectedOfferCards.map((card) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
-                          <Card
-                            onClick={() => handleCardClick(card)}
-                            key={card.id}
-                            className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
-                          >
-                            <Image
-                              width={300}
-                              height={300}
-                              style={{ height: 'auto' }}
-                              src={card.imageUrl}
-                              alt={card.name}
-                            />
-                            <p>{card.name}</p>
-                          </Card>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </ul>
-                  <p className="mb-2 mt-4 font-semibold">
-                    Cartas que serão{' '}
-                    <span className="text-teal-500">recebidas</span>:
-                  </p>
-                  <ul>
-                    <Grid container spacing={2}>
-                      {selectedReceiveCards.map((card) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
-                          <Card
-                            onClick={() => handleCardClick(card)}
-                            key={card.id}
-                            className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
-                          >
-                            <Image
-                              width={300}
-                              height={300}
-                              style={{ height: 'auto' }}
-                              src={card.imageUrl}
-                              alt={card.name}
-                            />
-                            <p>{card.name}</p>
-                          </Card>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </ul>
-                </div>
-              )}
-            </div>
-            <div className="my-4 flex w-full items-center justify-center gap-4">
-              <Button
-                className="bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
-                variant="contained"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-              >
-                <span>Voltar</span>
-              </Button>
-              {activeStep === 2 ? (
+                        ))}
+                      </Grid>
+                    </ul>
+                    <p className="mb-2 mt-4 font-semibold">
+                      Cartas que serão{' '}
+                      <span className="text-teal-500">recebidas</span>:
+                    </p>
+                    <ul>
+                      <Grid container spacing={2}>
+                        {selectedReceiveCards.map((card) => (
+                          <Grid item xs={12} sm={6} md={4} lg={3} key={card.id}>
+                            <Card
+                              onClick={() => handleCardClick(card)}
+                              key={card.id}
+                              className="flex w-fit flex-col items-center justify-center gap-y-2 p-4"
+                            >
+                              <Image
+                                width={300}
+                                height={300}
+                                style={{ height: 'auto' }}
+                                src={card.imageUrl}
+                                alt={card.name}
+                              />
+                              <p>{card.name}</p>
+                            </Card>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="my-4 flex w-full items-center justify-center gap-4">
                 <Button
-                  className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                  className="bg-orange-600 px-8 py-1 normal-case hover:bg-orange-500"
                   variant="contained"
-                  onClick={handleCreateTrade}
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
                 >
-                  <span>Criar Troca</span>
+                  <span>Voltar</span>
                 </Button>
-              ) : (
-                <Button
-                  className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
-                  variant="contained"
-                  onClick={handleNext}
-                >
-                  <span>Próximo</span>
-                </Button>
-              )}
-            </div>
-          </>
-        )}
+                {activeStep === 2 ? (
+                  <Button
+                    className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                    variant="contained"
+                    onClick={handleCreateTrade}
+                  >
+                    <span>Criar Troca</span>
+                  </Button>
+                ) : (
+                  <Button
+                    className="bg-teal-600 px-8 py-1 normal-case hover:bg-teal-500"
+                    variant="contained"
+                    onClick={handleNext}
+                  >
+                    <span>Próximo</span>
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </section>
     </main>
   );

@@ -53,52 +53,54 @@ export default function MyCards() {
   return (
     <main>
       <Navbar />
-      <section className="p-10">
-        <h2 className="text-h2 mb-4">Meus Cards</h2>
-        {loading ? (
-          <div className="mt-20 flex w-full items-center justify-center text-orange-500">
-            <CircularProgress color="inherit" />
-          </div>
-        ) : (
-          <>
-            <Grid container spacing={3}>
-              {cards.map((card: CardI) => (
-                <Grid item xs={12} sm={6} md={4} key={card.id}>
-                  <Card
-                    className="flex cursor-pointer flex-col items-center justify-center gap-y-2 p-4"
-                    onClick={() => handleCardClick(card)}
-                  >
-                    <Image
-                      width={300}
-                      height={300}
-                      style={{ height: 'auto' }}
-                      src={card.imageUrl}
-                      alt={card.name}
-                    />
-                    <h2 className="text-center">{card.name}</h2>
-                    <div>
-                      <Button
-                        className="w-full bg-red-600 px-8 py-1 normal-case hover:bg-red-500"
-                        variant="contained"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRemoveCard(card.id);
-                        }}
-                      >
-                        <span>Remover</span>
-                      </Button>
-                    </div>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-            {cards.length === 0 && (
-              <div className="mt-20 flex w-full items-center justify-center text-orange-500">
-                <h3>Nenhum card adicionado</h3>
-              </div>
-            )}
-          </>
-        )}
+      <section className="section-container">
+        <div className="content-container">
+          <h2 className="text-h2 mb-4">Meus Cards</h2>
+          {loading ? (
+            <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+              <CircularProgress color="inherit" />
+            </div>
+          ) : (
+            <>
+              <Grid container spacing={3}>
+                {cards.map((card: CardI) => (
+                  <Grid item xs={12} sm={6} md={4} key={card.id}>
+                    <Card
+                      className="flex cursor-pointer flex-col items-center justify-center gap-y-2 p-4"
+                      onClick={() => handleCardClick(card)}
+                    >
+                      <Image
+                        width={300}
+                        height={300}
+                        style={{ height: 'auto' }}
+                        src={card.imageUrl}
+                        alt={card.name}
+                      />
+                      <h2 className="text-center">{card.name}</h2>
+                      <div>
+                        <Button
+                          className="w-full bg-red-600 px-8 py-1 normal-case hover:bg-red-500"
+                          variant="contained"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveCard(card.id);
+                          }}
+                        >
+                          <span>Remover</span>
+                        </Button>
+                      </div>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+              {cards.length === 0 && (
+                <div className="mt-20 flex w-full items-center justify-center text-orange-500">
+                  <h3>Nenhum card adicionado</h3>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </section>
       <AppCardDetail />
     </main>

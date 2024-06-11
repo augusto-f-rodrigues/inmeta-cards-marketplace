@@ -10,6 +10,12 @@ body {
 }
 
 @layer utilities {
+  .section-container {
+    @apply flex items-center justify-center p-10;
+  }
+  .content-container {
+    @apply w-full max-w-[1440px];
+  }
   .form-container {
     @apply flex h-full w-full flex-col items-center justify-center;
   }

@@ -95,8 +95,8 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <section className="flex items-center justify-center p-10">
-        <div className="max-w-[1440px]">
+      <section className="section-container">
+        <div className="content-container">
           <h2 className="text-h2 mb-4">Todas as Trocas</h2>
 
           {loading ? (
