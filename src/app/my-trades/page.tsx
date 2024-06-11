@@ -225,6 +225,16 @@ export default function MyTrades() {
                           )}
                         </Grid>
                       </div>
+                      <div className="absolute right-0 top-0 p-2">
+                        <IconButton
+                          onClick={() => {
+                            setTradeToDeleteId(trade.id);
+                            setDeleteConfirmationOpen(true);
+                          }}
+                        >
+                          <Delete fontSize="large" style={{ color: 'red' }} />
+                        </IconButton>
+                      </div>
                       <button
                         onClick={() => handleOpenModal(trade)}
                         className="absolute bottom-0 left-0 w-full cursor-pointer bg-gray-200 p-2 text-center text-gray-800 hover:bg-gray-300"
