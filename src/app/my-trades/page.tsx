@@ -66,6 +66,7 @@ export default function MyTrades() {
                   <TradeCard
                     key={trade.id}
                     deleteOption={true}
+                    updateTradesList={fetchData}
                     trade={trade}
                     onCardClick={handleCardClick}
                     onOpenModal={handleOpenModal}

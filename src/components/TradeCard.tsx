@@ -13,6 +13,7 @@ interface TradeCardProps {
   onCardClick: (card: TradeCardI['card']) => void;
   onOpenModal: (trade: TradeInfoI) => void;
   deleteOption?: boolean;
+  updateTradesList?: () => void;
 }
 
 const TradeCard: React.FC<TradeCardProps> = ({
@@ -20,6 +21,7 @@ const TradeCard: React.FC<TradeCardProps> = ({
   onCardClick,
   onOpenModal,
   deleteOption = false,
+  updateTradesList,
 }) => {
   const dispatch = useDispatch();
   const [trades, setTrades] = useState<TradeInfoI[]>([]);
@@ -52,6 +54,9 @@ const TradeCard: React.FC<TradeCardProps> = ({
           severity: 'success',
         }),
       );
+      if (updateTradesList) {
+        updateTradesList();
+      }
     } catch (error) {
       console.error('Error deleting trade:', error);
       dispatch(
